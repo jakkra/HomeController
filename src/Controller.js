@@ -5,10 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb, faPlug, faBars } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer } from 'react-toastify';
 
+import LightController from './components/LightController'
 import { tabs } from './constants';
+
 
 const styles = {
   container: {
+    height: '100%',
+  },
+  toolbar: {
     position: 'fixed',
     bottom: 0,
     left: 0,
@@ -42,7 +47,7 @@ export default class Controller extends Component {
       selectedTab: tabs.LIGHTS,
     }
 
-    this.renderSelected = this.renderSelected.bind(this);
+    this.renderControllerView = this.renderControllerView.bind(this);
     this.renderButton = this.renderButton.bind(this);
   }
 
@@ -52,26 +57,6 @@ export default class Controller extends Component {
 
   componentWillUnmount() {
     
-  }
-
-  renderSelected() {
-    let text;
-    switch(this.state.selectedTab) {
-      case tabs.LIGHTS:
-        text = 'LIGHT';
-        break;
-      case tabs.OUTLETS:
-        text = 'OUTLETS';
-        break;
-      case tabs.OTHERS:
-        text = 'OTHERS';
-        break;
-      default:
-        text = 'WHUT';
-        break;
-    }
-
-    return (<div> {text}</div>);
   }
 
   renderButton(tabType, onClickThis) {
@@ -109,35 +94,46 @@ export default class Controller extends Component {
     );
   }
 
+  renderControllerView() {
+    let view = null;
+
+    switch(this.state.selectedTab) {
+      case tabs.LIGHTS:
+        view = (<LightController/>);
+        break;
+      case tabs.OUTLETS:
+        view = ('OutletController');
+        break;
+      case tabs.OTHERS:
+        view = ('OtherController');
+        break;
+      default:
+        break;
+    }
+
+    return view;
+  }
+
   render() {
     return (
-      <div className="controller">
+      <div style={styles.container} >
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
-        <Col className="Container">
-          <Row xs={10}>
-            {this.renderSelected()}
-          </Row>
-          <Row>
-            <video ref="video"/>
-          </Row>
-          <Row xs={2}>
-            <div style={styles.container}>
-              <Col mdHidden styles={styles.toolbarColumn} md={12} >
-                <Row xs={12}>
-                  <Col xs={4}>
-                    {this.renderButton(tabs.LIGHTS, this.props.onLightsSelected)}
-                  </Col>
-                  <Col xs={4}>
-                    {this.renderButton(tabs.OUTLETS, this.props.onOutletsSelected)}
-                  </Col>
-                  <Col xs={4}>
-                    {this.renderButton(tabs.OTHERS, this.props.onOthersSelected)}
-                  </Col>
-                </Row>
+        {this.renderControllerView()}
+        <div style={styles.toolbar}>
+          <Col mdHidden styles={styles.toolbarColumn} md={12} >
+            <Row xs={12}>
+              <Col xs={4}>
+                {this.renderButton(tabs.LIGHTS, this.props.onLightsSelected)}
               </Col>
-            </div>
-          </Row>
-        </Col>
+              <Col xs={4}>
+                {this.renderButton(tabs.OUTLETS, this.props.onOutletsSelected)}
+              </Col>
+              <Col xs={4}>
+                {this.renderButton(tabs.OTHERS, this.props.onOthersSelected)}
+              </Col>
+            </Row>
+          </Col>
+        </div>
       </div>
     );
   }
