@@ -1,70 +1,44 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Col, Row, Button, ButtonGroup } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLightbulb, faPlug, faBars } from '@fortawesome/free-solid-svg-icons'
+import { Button, ButtonGroup } from 'react-bootstrap';
 
-
-const styles = {
-  title: {
-    fontSize: '2em',
-    color: '#294459'
-  },
-  icon: {
-    color: 'white',
-    fontSize: '1.5em',
-  },
-};
 
 export default class LightSelector extends Component {
 
   static propTypes = {
     onSelected: PropTypes.func,
-    lamps: PropTypes.array,
+    lights: PropTypes.array,
   };
 
   constructor() {
     super();
 
     this.state = {
-      selectedLamp: null,
+      selectedlight: null,
     }
 
     this.onButtonClicked = this.onButtonClicked.bind(this);
   }
 
-  componentDidMount() {
-    
-  }
-
-  componentWillUnmount() {
-    
-  }
-
-  onButtonClicked(lamp) {
+  onButtonClicked(light) {
     this.setState({
-      selectedLamp: lamp
+      selectedlight: light
     })
-    this.props.onSelected(lamp);
+    this.props.onSelected(light);
   }
 
-  renderButton(lamp) {
-    let bsStyle = "info";
-    
-    if (this.state.selectedLamp && this.state.selectedLamp.id === lamp.id) {
-      bsStyle = "success";
-    }
-    return (<Button key={lamp.id} href="#" bsStyle={bsStyle} onClick={() => this.onButtonClicked(lamp)} >{lamp.name}</Button>);
+  renderButton(light) {
+    return (<Button key={light.id} href="#" bsStyle="info" onClick={() => this.onButtonClicked(light)} >{light.name}</Button>);
   }
 
 
   render() {
-    if (!this.props.lamps || this.props.lamps.length === 0) return;
+    if (!this.props.lights || this.props.lights.length === 0) return null;
 
     return (
       <ButtonGroup justified>
-        {this.props.lamps.map((lamp) => this.renderButton(lamp))}
+        {this.props.lights.map((light) => this.renderButton(light))}
       </ButtonGroup>
     )
   }

@@ -1,101 +1,64 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-import { Col, Row, Button, ButtonGroup } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLightbulb, faPlug, faBars } from '@fortawesome/free-solid-svg-icons'
-import { ToastContainer } from 'react-toastify';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
-import LightSelector from './LightSelector'
-import Remote from './Remote'
+import { Actions, DeviceTypes } from '../constants';
+import { handleLightAction } from '../lib/ActionHandler';
 
 const styles = {
-  title: {
-    fontSize: '2em',
-    color: '#294459'
-  },
-  controller: {
-
-  },
-  icon: {
-    color: 'white',
-    fontSize: '1.5em',
+  lightTypeText: {
+    fontSize: '1.2em',
+    color: '#294459',
   },
 };
 
-const lampsLekrum =
-[{
-  name: "Falcon",
-  id: 1,
-  type: 'switch',
-  ip: 'http://192.168.1.33',
-},
-{
-  name: "Ljusstake",
-  id: 2,
-  type: 'switch',
-  ip: 'http://192.168.1.251',
-},
-{
-  name: "Skrivare",
-  id: 3,
-  type: 'switch',
-  ip: 'http://192.168.1.196',
-},
-{
-  name: "Skrivbord",
-  id: 4,
-  type: 'switch',
-  ip: 'http://192.168.1.66',
-}]
 
 export default class LightController extends Component {
-  constructor() {
-    super();
 
-    this.state = {
-      selectedLamp: null
+  static propTypes = {
+    light: PropTypes.object,
+  };
+
+  renderControllerDependingOnLight(light) {
+    switch (light.type) {
+      case DeviceTypes.WLED:
+      case DeviceTypes.HUE:
+      case DeviceTypes.TASMOTA_OUTLET:
+      case DeviceTypes.RF_OUTLET:
+        return this.renderOnOffLight(light);
+      default:
+        return (<div>Not Implemented: {light.type}</div>);
     }
-
-    this.onLampSelected = this.onLampSelected.bind(this);
   }
 
-  componentDidMount() {
-    
-  }
-
-  componentWillUnmount() {
-    
-  }
-
-  renderRoomTitle(roomName) {
-    return (<div style={styles.title}>{roomName}</div>);
-  }
-
-  onLampSelected(lamp) {
-    this.setState({ selectedLamp: lamp });
-  }
-
-  render() {
+  renderOnOffLight(light) {
     return (
-      <div className="controller">
-        <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
-        <Col style={styles.controller} md={4}>
-          {this.renderRoomTitle('Controller')}
-          <Remote light={this.state.selectedLamp}/>
-        </Col>
-        <Col md={4}>
-          {this.renderRoomTitle('Lekrum')}
-          <LightSelector lamps={lampsLekrum} onSelected={this.onLampSelected}/>
-        </Col>
-        <Col md={4}>
-          {this.renderRoomTitle('Vardagsrum')}
-        </Col>
-        <Col md={4}>
-          {this.renderRoomTitle('Sovrum')}
-        </Col>
+      <div>
+        <ButtonGroup justified>
+          <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionOnOff(light, true)} >ON</Button>
+          <Button href="#" bsStyle="danger" onClick={() => this.handleControllerActionOnOff(light, false)} >OFF</Button>
+        </ButtonGroup>
+        <div style={styles.lightTypeText}>
+          {light.type}
+        </div>
       </div>
     );
   }
+
+  handleControllerActionOnOff(light, isOn) {
+    handleLightAction(light, isOn ? Actions.ON : Actions.OFF)
+    .then(console.log('Success'))
+    .catch(err => console.log('Should display error to user', err));
+  }
+
+  render() {
+    if (!this.props.light) return null;
+
+    return (
+      <div>
+        {this.renderControllerDependingOnLight(this.props.light)}
+      </div>
+    )
+  }
 }
-
-

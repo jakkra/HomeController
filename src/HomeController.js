@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb, faPlug, faBars } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer } from 'react-toastify';
 
-import LightController from './components/LightController'
-import { tabs } from './constants';
+import LightPage from './components/LightPage'
+import { Tabs } from './constants';
+import { rooms } from './config';
 
 
 const styles = {
@@ -39,24 +40,16 @@ const styles = {
   },
 };
 
-export default class Controller extends Component {
+export default class HomeController extends Component {
   constructor() {
     super();
 
     this.state = {
-      selectedTab: tabs.LIGHTS,
+      selectedTab: Tabs.LIGHTS,
     }
 
     this.renderControllerView = this.renderControllerView.bind(this);
     this.renderButton = this.renderButton.bind(this);
-  }
-
-  componentDidMount() {
-    
-  }
-
-  componentWillUnmount() {
-    
   }
 
   renderButton(tabType, onClickThis) {
@@ -64,13 +57,13 @@ export default class Controller extends Component {
     let buttonStyle = (this.state.selectedTab) === tabType ? "success" : "primary";
     
     switch(tabType) {
-      case tabs.LIGHTS:
+      case Tabs.LIGHTS:
         image = faLightbulb;
         break;
-      case tabs.OUTLETS:
+      case Tabs.OUTLETS:
         image = faPlug;
         break;
-      case tabs.OTHERS:
+      case Tabs.OTHERS:
         image = faBars;
         break;
       default:
@@ -98,13 +91,13 @@ export default class Controller extends Component {
     let view = null;
 
     switch(this.state.selectedTab) {
-      case tabs.LIGHTS:
-        view = (<LightController/>);
+      case Tabs.LIGHTS:
+        view = (<LightPage rooms={rooms}/>);
         break;
-      case tabs.OUTLETS:
+      case Tabs.OUTLETS:
         view = ('OutletController');
         break;
-      case tabs.OTHERS:
+      case Tabs.OTHERS:
         view = ('OtherController');
         break;
       default:
@@ -123,13 +116,13 @@ export default class Controller extends Component {
           <Col mdHidden styles={styles.toolbarColumn} md={12} >
             <Row xs={12}>
               <Col xs={4}>
-                {this.renderButton(tabs.LIGHTS, this.props.onLightsSelected)}
+                {this.renderButton(Tabs.LIGHTS, this.props.onLightsSelected)}
               </Col>
               <Col xs={4}>
-                {this.renderButton(tabs.OUTLETS, this.props.onOutletsSelected)}
+                {this.renderButton(Tabs.OUTLETS, this.props.onOutletsSelected)}
               </Col>
               <Col xs={4}>
-                {this.renderButton(tabs.OTHERS, this.props.onOthersSelected)}
+                {this.renderButton(Tabs.OTHERS, this.props.onOthersSelected)}
               </Col>
             </Row>
           </Col>
