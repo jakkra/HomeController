@@ -55,6 +55,12 @@ export const rooms =
 			  ip: "http://192.168.1.129"
 			},
 			{
+                          name: "Klocka",
+                          id: 12,
+                          type: DeviceTypes.TASMOTA_OUTLET,
+                          ip: "http://192.168.1.208"
+                        },
+			{
 			  name: "Trappa-Spot",
 			  id: 8,
 			  type: DeviceTypes.HUE,
