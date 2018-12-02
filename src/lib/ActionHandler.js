@@ -114,7 +114,7 @@ function handleHue(light, action, params) {
   });
 }
 
-function handleWled(light, action, options) {
+function handleWled(light, action, params) {
   return new Promise((resolve, reject) => {
     let url = light.ip;
 
@@ -128,8 +128,14 @@ function handleWled(light, action, options) {
       case Actions.TOGGLE:
         url += '/win&T=2';
         break;
+      case Actions.BRIGHTNESS:
+        if (params && params.brightness) {
+          url += '/win&A=' + params.brightness;
+        } else {
+          return reject(new Error(`Action ${action} requires params with brightness set for hue-light`));
+        }
       case Actions.LIGHT_EFFECT:
-        url += '/win&FX=' + options.effect;
+        url += '/win&FX=' + params.effect;
         break;
       default:
         return reject(new Error(`Action ${action} not implemented/supported for wled`));
