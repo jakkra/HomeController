@@ -1,4 +1,7 @@
 import { Actions, DeviceTypes } from '../constants';
+import { mirrorUrl } from '../config';
+
+console.log('Mirror', mirrorUrl);
 
 const checkStatus = res => {
   return new Promise((resolve, reject) => {
@@ -11,12 +14,12 @@ const checkStatus = res => {
   });
 };
 
-export function handleLightAction(light, action) {
+export function handleLightAction(light, action, options) {
   switch (light.type) {
     case DeviceTypes.WLED:
-      return handleWled(light, action);
+      return handleWled(light, action, options);
     case DeviceTypes.HUE:
-      return handleHue(light, action);
+      return handleHue(light, action, options);
     case DeviceTypes.TASMOTA_OUTLET:
       return handleSonoffTasmotaOutletAction(light.ip, action);
     case DeviceTypes.RF_OUTLET:
@@ -67,13 +70,51 @@ export function handleSonoffTasmotaOutletAction(ip, action) {
   });
 }
 
-function handleHue(light, action) {
+function handleHue(light, action, params) {
   return new Promise((resolve, reject) => {
-    return resolve();
+    let options;
+    const url = mirrorUrl + '/api/hue';
+
+    switch (action) {
+      case Actions.ON:
+        options = {
+          on: true,
+        }
+        break;
+      case Actions.OFF:
+        options = {
+          on: false,
+        }
+        break;
+      case Actions.BRIGHTNESS:
+        if (params && params.brightness) {
+          options = {
+            on: true,
+            bri: params.brightness,
+          }
+        } else {
+          return reject(new Error(`Action ${action} requires params with brightness set for hue-light`));
+        }
+        break;
+      case Actions.TOGGLE:
+      default:
+        return reject(new Error(`Action ${action} not implemented/supported for hue-light`));
+    }
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: light.hueName,
+        options: options,
+      })
+    })
   });
 }
 
-function handleWled(light, action) {
+function handleWled(light, action, options) {
   return new Promise((resolve, reject) => {
     let url = light.ip;
 
@@ -86,6 +127,9 @@ function handleWled(light, action) {
         break;
       case Actions.TOGGLE:
         url += '/win&T=2';
+        break;
+      case Actions.LIGHT_EFFECT:
+        url += '/win&FX=' + options.effect;
         break;
       default:
         return reject(new Error(`Action ${action} not implemented/supported for wled`));

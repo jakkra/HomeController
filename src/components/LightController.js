@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 import { Actions, DeviceTypes } from '../constants';
 import { handleLightAction } from '../lib/ActionHandler';
@@ -20,19 +22,51 @@ export default class LightController extends Component {
     light: PropTypes.object,
   };
 
+  constructor() {
+    super();
+
+    this.state = {
+      hueBrightness: 255/2,
+    }
+
+    this.onBrightnessChange = this.onBrightnessChange.bind(this);
+    this.renderBrightness = this.renderBrightness.bind(this);
+  }
+
   renderControllerDependingOnLight(light) {
     switch (light.type) {
-      case DeviceTypes.WLED:
       case DeviceTypes.HUE:
+        return this.renderHueLight(light);
+      case DeviceTypes.WLED:
+        return this.renderWledLight(light);
       case DeviceTypes.TASMOTA_OUTLET:
       case DeviceTypes.RF_OUTLET:
-        return this.renderOnOffLight(light);
+        return this.renderOnOff(light);
       default:
         return (<div>Not Implemented: {light.type}</div>);
     }
   }
 
-  renderOnOffLight(light) {
+  renderHueLight(light) {
+    return (
+      <div>
+        {this.renderOnOff(light)}
+        {this.renderBrightness(light)}
+      </div>
+      )
+  }
+
+  renderWledLight(light) {
+    return (
+      <div>
+        {this.renderOnOff(light)}
+        {this.renderBrightness(light)}
+        {this.renderEffectsDropdown(light)}
+      </div>
+      )
+  }
+
+  renderOnOff(light) {
     return (
       <div>
         <ButtonGroup justified>
@@ -46,8 +80,52 @@ export default class LightController extends Component {
     );
   }
 
+  onBrightnessChange(value) {
+    this.setState({ hueBrightness: value });
+  }
+
+  renderBrightness(light) {
+    return(
+      <div>
+         <Slider 
+          min={1}
+          max={255}
+          value={this.state.hueBrightness}
+          onChange={this.onBrightnessChange}
+          onAfterChange={() => this.handleControllerActionBrightness(light, this.state.hueBrightness)}
+        />
+      </div>
+      )
+  }
+
+  renderEffectsDropdown(light) {
+    return (
+      <DropdownButton
+        bsStyle="primary"
+        title={"Select effect"}
+        id="effectDropdown"
+      >
+        { colorEffects.map((effect, index) => <MenuItem onSelect={(id => this.handleControllerActionEffect(light, id)) } id={`dropdown-basic-${index}`} key={effect} eventKey={index}>{effect}</MenuItem>) }
+      </DropdownButton>
+    );
+  }
+
   handleControllerActionOnOff(light, isOn) {
     handleLightAction(light, isOn ? Actions.ON : Actions.OFF)
+    .then(console.log('Success'))
+    .catch(err => console.log('Should display error to user', err));
+  }
+
+  handleControllerActionBrightness(light, brightness) {
+    console.log(brightness)
+    handleLightAction(light, Actions.BRIGHTNESS, { brightness: brightness })
+    .then(console.log('Success'))
+    .catch(err => console.log('Should display error to user', err));
+  }
+
+  handleControllerActionEffect(light, id) {
+    console.log(id, light)
+    handleLightAction(light, Actions.LIGHT_EFFECT, { effect: id })
     .then(console.log('Success'))
     .catch(err => console.log('Should display error to user', err));
   }
@@ -62,3 +140,82 @@ export default class LightController extends Component {
     )
   }
 }
+
+const colorEffects = [
+  "Solid",
+  "Blink",
+  "Breathe",
+  "Wipe",
+  "Wipe Random",
+  "Random Colors",
+  "Sweep",
+  "Dynamic",
+  "Colorloop",
+  "Rainbow",
+  "Scan",
+  "Double Scan",
+  "Fade",
+  "Chase",
+  "Chase Rainbow",
+  "Running",
+  "Twinkle",
+  "Twinkle Random",
+  "Twinkle Fade",
+  "Twinkle Random Fade",
+  "Sparkle",
+  "Dark Sparkle",
+  "Dark Sparkle+",
+  "Strobe",
+  "Strobe Rainbow",
+  "Double Strobe",
+  "Blink Rainbow",
+  "Android",
+  "Dark Chase",
+  "Dark Chase Random",
+  "Dark Chase Rainbow",
+  "Chase Flash",
+  "Dark Chase Random_1",
+  "Rainbow Runner",
+  "Colorful",
+  "Traffic Light",
+  "Sweep Random",
+  "Running 2",
+  "Red & Blue",
+  "Running 2 Random",
+  "Scanner",
+  "Lighthouse",
+  "Fireworks",
+  "Fireworks Random",
+  "Merry Christmas",
+  "Fire Flicker",
+  "Gradient",
+  "Loading",
+  "In Out",
+  "In In",
+  "Out Out",
+  "Out In",
+  "Circus",
+  "Halloween",
+  "Tri Chase",
+  "Tri Wipe",
+  "Tri Fade",
+  "Lightning",
+  "ICU",
+  "Multi Comet",
+  "Dual Scanner",
+  "Random Chase",
+  "Oscillate",
+  "Pride 2015",
+  "Juggle",
+  "Palette",
+  "Fire 2012",
+  "Colorwaves",
+  "BPM",
+  "Fill Noise 8",
+  "Noise 16 1",
+  "Noise 16 2",
+  "Noise 16 3",
+  "Noise 16 4",
+  "Colortwinkle",
+  "Lake"
+]

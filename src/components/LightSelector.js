@@ -1,14 +1,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Row, Button, ButtonGroup } from 'react-bootstrap';
 
+const styles = {
+  lightButton: {
+    margin: 4,
+  }
+}
 
 export default class LightSelector extends Component {
 
   static propTypes = {
     onSelected: PropTypes.func,
-    lights: PropTypes.array,
+    lightGroups: PropTypes.array,
   };
 
   constructor() {
@@ -29,17 +34,25 @@ export default class LightSelector extends Component {
   }
 
   renderButton(light) {
-    return (<Button key={light.id} href="#" bsStyle="info" onClick={() => this.onButtonClicked(light)} >{light.name}</Button>);
+    return (<Button key={light.id} bsSize="large" style={styles.lightButton} href="#" bsStyle="info" onClick={() => this.onButtonClicked(light)} >{light.name}</Button>);
   }
 
 
   render() {
-    if (!this.props.lights || this.props.lights.length === 0) return null;
-
+    if (!this.props.lightGroups || this.props.lightGroups.length === 0) return null;
     return (
-      <ButtonGroup justified>
-        {this.props.lights.map((light) => this.renderButton(light))}
-      </ButtonGroup>
-    )
+      <div>
+        {this.props.lightGroups.map((group) => {
+          return(
+            <ButtonGroup key={group.groupName} justified>
+              {group.groupName}
+              <Row md={4}>
+                {group.lights.map((light) => this.renderButton(light))}
+              </Row>
+            </ButtonGroup>
+          );
+        })}
+      </div>
+    );
   }
 }

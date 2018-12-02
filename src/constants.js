@@ -7,7 +7,9 @@ const constants = {
 	Actions: {
 		ON: 'ON',
 		OFF: 'OFF',
-		TOGGLE: 'TOGGLE'
+		TOGGLE: 'TOGGLE',
+		BRIGHTNESS: 'BRIGHTNESS',
+		LIGHT_EFFECT: 'LIGHT_EFFECT'
 	},
 	DeviceTypes: {
 		WLED: 'WLED',

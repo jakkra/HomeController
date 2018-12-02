@@ -32,8 +32,8 @@ export default class LightPage extends Component {
   }
 
   componentDidMount() {
-    if (this.props.rooms && this.props.rooms[0] && this.props.rooms[0].lights && this.props.rooms[0].lights[0]) {
-      this.setState({selectedLight: this.props.rooms[0].lights[0]});
+    if (this.props.rooms && this.props.rooms[0] && this.props.rooms[0].groups && this.props.rooms[0].groups[0]) {
+      this.setState({selectedLight: this.props.rooms[0].groups[0].lights[0]});
     }
   }
 
@@ -49,7 +49,7 @@ export default class LightPage extends Component {
     return (
       <Col md={6} key={room.name} >
         {this.renderRoomTitle(room.name)}
-        <LightSelector lights={room.lights} onSelected={this.onLightSelected}/>
+        <LightSelector lightGroups={room.groups} onSelected={this.onLightSelected}/>
       </Col>
       )
   }
