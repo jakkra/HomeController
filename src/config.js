@@ -50,6 +50,12 @@ export const rooms =
             id:12,
             type:DeviceTypes.TASMOTA_OUTLET,
             ip:"http://192.168.1.208"
+          },
+          {
+            name:"Jul Slinga",
+            id:12,
+            type:DeviceTypes.TASMOTA_OUTLET,
+            ip:"http://192.168.1.188"
           }
         ]
       }
