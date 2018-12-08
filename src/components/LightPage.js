@@ -11,7 +11,6 @@ const styles = {
   title: {
     fontSize: '2em',
     color: '#294459',
-    marginBottom: '5%'
   },
 };
 
@@ -56,7 +55,7 @@ export default class LightPage extends Component {
 
   render() {
     return (
-      <div className="controller">
+      <div style={{height: '100%'}} className="controller">
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
         <Col md={4}>
           {this.renderRoomTitle('Controller')}

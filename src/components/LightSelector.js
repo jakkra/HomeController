@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import { Row, Button, ButtonGroup } from 'react-bootstrap';
+import { DeviceTypes } from '../constants';
+
 
 const styles = {
   lightButton: {
@@ -34,7 +36,27 @@ export default class LightSelector extends Component {
   }
 
   renderButton(light) {
-    return (<Button key={light.id} bsSize="large" style={styles.lightButton} href="#" bsStyle="info" onClick={() => this.onButtonClicked(light)} >{light.name}</Button>);
+    let bsStyle = 'primary';
+
+    switch (light.type) {
+      case DeviceTypes.HUE:
+        bsStyle = "info";
+        break;
+      case DeviceTypes.WLED:
+        bsStyle = "primary";
+        break;
+      case DeviceTypes.TASMOTA_OUTLET:
+        bsStyle = "success";
+          break;
+      case DeviceTypes.RF_OUTLET:
+        bsStyle = "success";
+        break;
+      default:
+        bsStyle = "primary";
+        break;
+    }
+
+    return (<Button key={light.id} style={styles.lightButton} href="#" bsStyle={bsStyle} onClick={() => this.onButtonClicked(light)} >{light.name}</Button>);
   }
 
 

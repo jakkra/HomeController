@@ -12,7 +12,6 @@ import { rooms } from './config';
 
 const styles = {
   container: {
-    height: '100%',
   },
   toolbar: {
     position: 'fixed',
@@ -109,11 +108,13 @@ export default class HomeController extends Component {
 
   render() {
     return (
-      <div style={styles.container} >
+      <Col style={styles.container} >
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
-        {this.renderControllerView()}
+        <div style={{paddingBottom: 50}}>
+          {this.renderControllerView()}
+        </div>
         <div style={styles.toolbar}>
-          <Col mdHidden styles={styles.toolbarColumn} md={12} >
+          <Col styles={styles.toolbarColumn} md={12} >
             <Row xs={12}>
               <Col xs={4}>
                 {this.renderButton(Tabs.LIGHTS, this.props.onLightsSelected)}
@@ -127,7 +128,7 @@ export default class HomeController extends Component {
             </Row>
           </Col>
         </div>
-      </div>
+      </Col>
     );
   }
 }

@@ -134,6 +134,7 @@ function handleWled(light, action, params) {
         } else {
           return reject(new Error(`Action ${action} requires params with brightness set for hue-light`));
         }
+        break;
       case Actions.LIGHT_EFFECT:
         url += '/win&FX=' + params.effect;
         break;

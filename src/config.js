@@ -5,85 +5,6 @@ export const mirrorUrl = 'http://192.168.1.98:3001';
 export const rooms =
 [
   {
-    name:"Lekrum",
-    groups:[
-      {
-        groupName:"WLED",
-        lights:[
-          {
-            name:"Falcon",
-            id:1,
-            type:DeviceTypes.WLED,
-            ip:"http://192.168.1.33"
-          },
-          {
-            name:"Skrivare",
-            id:3,
-            type:DeviceTypes.WLED,
-            ip:"http://192.168.1.196"
-          },
-          {
-            name:"Skrivbord",
-            id:4,
-            type:DeviceTypes.WLED,
-            ip:"http://192.168.1.66"
-          }
-        ]
-      },
-      {
-        groupName:"HUE",
-        lights:[
-          {
-            name:"Spot Skrivbord",
-            id:13,
-            type:DeviceTypes.HUE,
-            hueName:"Lekrum-spot-right"
-          },
-          {
-            name:"Spot Mitten",
-            id:14,
-            type:DeviceTypes.HUE,
-            hueName:"Lekrum-spot-middle"
-          },
-          {
-            name:"Spot Vänster",
-            id:15,
-            type:DeviceTypes.HUE,
-            hueName:"Lekrum-spot-left"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name:"Sovrum",
-    groups:[
-      {
-        groupName:"HUE",
-        lights:[
-          {
-            name:"Taklampa",
-            id:5,
-            type:DeviceTypes.HUE,
-            hueName:"Sovrum-tak"
-          }
-        ]
-      },
-      {
-        groupName:"OTHER",
-        lights:[
-          {
-            name:"Ljusslinga",
-            id:6,
-            type:DeviceTypes.RF_OUTLET,
-            url:"http://192.168.1.98:3001/api/serial/outlet:1:",
-
-          }
-        ]
-      }
-    ]
-  },
-  {
     name:"Vardagsrum",
     groups:[
       {
@@ -140,5 +61,84 @@ export const rooms =
       urlOn:"http://192.168.1.98:3001/api/serial/outlet:4:1",
       urlOff:"http://192.168.1.98:3001/api/serial/outlet:4:0"
     }
-  }
+  },
+  {
+    name:"Sovrum",
+    groups:[
+      {
+        groupName:"HUE",
+        lights:[
+          {
+            name:"Taklampa",
+            id:5,
+            type:DeviceTypes.HUE,
+            hueName:"Sovrum-tak"
+          }
+        ]
+      },
+      {
+        groupName:"OTHER",
+        lights:[
+          {
+            name:"Ljusslinga",
+            id:6,
+            type:DeviceTypes.RF_OUTLET,
+            url:"http://192.168.1.98:3001/api/serial/outlet:1:",
+
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name:"Lekrum",
+    groups:[
+      {
+        groupName:"WLED",
+        lights:[
+          {
+            name:"Falcon",
+            id:1,
+            type:DeviceTypes.WLED,
+            ip:"http://192.168.1.33"
+          },
+          {
+            name:"Skrivare",
+            id:3,
+            type:DeviceTypes.WLED,
+            ip:"http://192.168.1.196"
+          },
+          {
+            name:"Skrivbord",
+            id:4,
+            type:DeviceTypes.WLED,
+            ip:"http://192.168.1.66"
+          }
+        ]
+      },
+      {
+        groupName:"HUE",
+        lights:[
+          {
+            name:"Spot Skrivbord",
+            id:13,
+            type:DeviceTypes.HUE,
+            hueName:"Lekrum-spot-right"
+          },
+          {
+            name:"Spot Mitten",
+            id:14,
+            type:DeviceTypes.HUE,
+            hueName:"Lekrum-spot-middle"
+          },
+          {
+            name:"Spot Vänster",
+            id:15,
+            type:DeviceTypes.HUE,
+            hueName:"Lekrum-spot-left"
+          }
+        ]
+      }
+    ]
+  },
 ]

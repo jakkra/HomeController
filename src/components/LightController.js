@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Col, Row, Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons'
+
 
 import { Actions, DeviceTypes } from '../constants';
 import { handleLightAction } from '../lib/ActionHandler';
@@ -12,6 +16,16 @@ const styles = {
   lightTypeText: {
     fontSize: '1.2em',
     color: '#294459',
+  },
+  brightnessText: {
+    marginTop: 14,
+  },
+  brightnessSlider: {
+    margin: 15,
+  },
+  wledUrlIcon: {
+    color: '#8aaa91',
+    fontSize: '1.6em',
   },
 };
 
@@ -59,11 +73,20 @@ export default class LightController extends Component {
   renderWledLight(light) {
     return (
       <div>
-        {this.renderOnOff(light)}
-        {this.renderBrightness(light)}
-        {this.renderEffectsDropdown(light)}
+          {this.renderOnOff(light)}
+          {this.renderBrightness(light)}
+        <Row>
+            {this.renderEffectsDropdown(light)}
+            {this.renderWledWebpageButton(light)}
+        </Row>
       </div>
       )
+  }
+
+  renderWledWebpageButton(light) {
+    return  (
+      <Button href={light.ip} bsStyle="link"><FontAwesomeIcon href={light.ip} icon={faExternalLinkAlt} style={styles.wledUrlIcon} /></Button>
+      );
   }
 
   renderOnOff(light) {
@@ -73,9 +96,6 @@ export default class LightController extends Component {
           <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionOnOff(light, true)} >ON</Button>
           <Button href="#" bsStyle="danger" onClick={() => this.handleControllerActionOnOff(light, false)} >OFF</Button>
         </ButtonGroup>
-        <div style={styles.lightTypeText}>
-          {light.type}
-        </div>
       </div>
     );
   }
@@ -87,13 +107,29 @@ export default class LightController extends Component {
   renderBrightness(light) {
     return(
       <div>
-         <Slider 
-          min={1}
-          max={255}
-          value={this.state.hueBrightness}
-          onChange={this.onBrightnessChange}
-          onAfterChange={() => this.handleControllerActionBrightness(light, this.state.hueBrightness)}
-        />
+        <Col xs={2}>
+          <div style={styles.brightnessText} >
+            Brightness:
+          </div>
+        </Col>
+        <Col xs={10}>
+          <Slider 
+            style={styles.brightnessSlider}
+            min={1}
+            max={255}
+            handleStyle={{
+              height: 28,
+              width: 28,
+              marginLeft: -14,
+              marginTop: -9,
+            }}
+            railStyle={{ height: 10 }}
+            trackStyle={{  height: 10 }}
+            value={this.state.hueBrightness}
+            onChange={this.onBrightnessChange}
+            onAfterChange={() => this.handleControllerActionBrightness(light, this.state.hueBrightness)}
+          />
+        </Col>
       </div>
       )
   }
@@ -135,6 +171,9 @@ export default class LightController extends Component {
 
     return (
       <div>
+        <div style={styles.lightTypeText}>
+          {this.props.light.name + ' ' + this.props.light.type}
+        </div>
         {this.renderControllerDependingOnLight(this.props.light)}
       </div>
     )
