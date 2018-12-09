@@ -52,8 +52,8 @@ export const rooms =
             ip:"http://192.168.1.208"
           },
           {
-            name:"Jul Slinga",
-            id:12,
+            name:"Jul-slinga",
+            id:13,
             type:DeviceTypes.TASMOTA_OUTLET,
             ip:"http://192.168.1.188"
           }
@@ -79,6 +79,12 @@ export const rooms =
             id:5,
             type:DeviceTypes.HUE,
             hueName:"Sovrum-tak"
+          },
+          {
+            name:"Spot",
+            id:16,
+            type:DeviceTypes.HUE,
+            hueName:"Sovrum-spot"
           }
         ]
       },
