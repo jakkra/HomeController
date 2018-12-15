@@ -34,6 +34,7 @@ export default class LightController extends Component {
 
   static propTypes = {
     light: PropTypes.object,
+    group: PropTypes.object,
   };
 
   constructor() {
@@ -45,6 +46,7 @@ export default class LightController extends Component {
 
     this.onBrightnessChange = this.onBrightnessChange.bind(this);
     this.renderBrightness = this.renderBrightness.bind(this);
+    this.renderGroupOnOff = this.renderGroupOnOff.bind(this);
   }
 
   renderControllerDependingOnLight(light) {
@@ -87,6 +89,17 @@ export default class LightController extends Component {
     return  (
       <Button href={light.ip} bsStyle="link"><FontAwesomeIcon href={light.ip} icon={faExternalLinkAlt} style={styles.wledUrlIcon} /></Button>
       );
+  }
+
+  renderGroupOnOff(group) {
+    return (
+      <div>
+        <ButtonGroup justified>
+          <Button href="#" bsStyle="success" onClick={() => group.lights.forEach(light => this.handleControllerActionOnOff(light, true))} >ON</Button>
+          <Button href="#" bsStyle="danger" onClick={() => group.lights.forEach(light => this.handleControllerActionOnOff(light, false))} >OFF</Button>
+        </ButtonGroup>
+      </div>
+    );
   }
 
   renderOnOff(light) {
@@ -167,14 +180,23 @@ export default class LightController extends Component {
   }
 
   render() {
-    if (!this.props.light) return null;
+    if (!this.props.light && !this.props.group) return null;
+    let controller = null;
+    let description = null;
 
+    if (this.props.light) {
+      description = this.props.light.name + ' ' + this.props.light.type;
+      controller = this.renderControllerDependingOnLight(this.props.light);
+    } else if( this.props.group) {
+      description = this.props.group.groupName;
+      controller = this.renderGroupOnOff(this.props.group);
+    }
     return (
       <div>
         <div style={styles.lightTypeText}>
-          {this.props.light.name + ' ' + this.props.light.type}
+          {description}
         </div>
-        {this.renderControllerDependingOnLight(this.props.light)}
+        {controller}
       </div>
     )
   }

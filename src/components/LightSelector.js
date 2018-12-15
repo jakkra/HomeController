@@ -14,7 +14,8 @@ const styles = {
 export default class LightSelector extends Component {
 
   static propTypes = {
-    onSelected: PropTypes.func,
+    onLightSelected: PropTypes.func,
+    onGroupSelected: PropTypes.func,
     lightGroups: PropTypes.array,
   };
 
@@ -25,17 +26,18 @@ export default class LightSelector extends Component {
       selectedlight: null,
     }
 
-    this.onButtonClicked = this.onButtonClicked.bind(this);
+    this.onLightClicked = this.onLightClicked.bind(this);
+    this.renderAllbutton = this.renderAllbutton.bind(this);
   }
 
-  onButtonClicked(light) {
+  onLightClicked(light) {
     this.setState({
       selectedlight: light
     })
-    this.props.onSelected(light);
+    this.props.onLightSelected(light);
   }
 
-  renderButton(light) {
+  renderLightButton(light) {
     let bsStyle = 'primary';
 
     switch (light.type) {
@@ -56,7 +58,15 @@ export default class LightSelector extends Component {
         break;
     }
 
-    return (<Button key={light.id} style={styles.lightButton} href="#" bsStyle={bsStyle} onClick={() => this.onButtonClicked(light)} >{light.name}</Button>);
+    return (<Button key={light.id} style={styles.lightButton} href="#" bsStyle={bsStyle} onClick={() => this.onLightClicked(light)} >{light.name}</Button>);
+  }
+
+  renderAllbutton(group) {
+    if (group.lights.length > 1) {
+      return (<Button key={group.name} style={styles.lightButton} href="#" bsStyle="warning" onClick={() => this.props.onGroupSelected(group)} >Alla</Button>);
+    } else {
+      return null;
+    }
   }
 
 
@@ -69,7 +79,8 @@ export default class LightSelector extends Component {
             <ButtonGroup key={group.groupName} justified>
               {group.groupName}
               <Row md={4}>
-                {group.lights.map((light) => this.renderButton(light))}
+                {this.renderAllbutton(group)}
+                {group.lights.map((light) => this.renderLightButton(light))}
               </Row>
             </ButtonGroup>
           );

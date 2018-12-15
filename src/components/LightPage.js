@@ -24,10 +24,12 @@ export default class LightPage extends Component {
     super();
 
     this.state = {
-      selectedLight: null
+      selectedLight: null,
+      selectedGroup: null
     }
 
     this.onLightSelected = this.onLightSelected.bind(this);
+    this.onGroupSelected = this.onGroupSelected.bind(this);
   }
 
   componentDidMount() {
@@ -41,14 +43,23 @@ export default class LightPage extends Component {
   }
 
   onLightSelected(light) {
-    this.setState({ selectedLight: light });
+    this.setState({ selectedLight: light, selectedGroup: null });
+  }
+
+  onGroupSelected(group) {
+    console.log(group);
+    this.setState({ selectedLight: null, selectedGroup: group });
   }
 
   renderRoom(room) {
     return (
       <Col md={6} key={room.name} >
         {this.renderRoomTitle(room.name)}
-        <LightSelector lightGroups={room.groups} onSelected={this.onLightSelected}/>
+        <LightSelector
+          lightGroups={room.groups}
+          onLightSelected={this.onLightSelected}
+          onGroupSelected={this.onGroupSelected}
+        />
       </Col>
       )
   }
@@ -59,7 +70,7 @@ export default class LightPage extends Component {
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
         <Col md={4}>
           {this.renderRoomTitle('Controller')}
-          <LightController light={this.state.selectedLight}/>
+          <LightController light={this.state.selectedLight} group={this.state.selectedGroup}/>
         </Col>
         <Col md={8}>
           {this.props.rooms.map((room) => this.renderRoom(room))}
