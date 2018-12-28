@@ -42,7 +42,7 @@ const styles = {
 export default class HomeController extends Component {
   constructor() {
     super();
-
+    
     this.state = {
       selectedTab: Tabs.LIGHTS,
     }
@@ -94,7 +94,7 @@ export default class HomeController extends Component {
         view = (<LightPage rooms={rooms}/>);
         break;
       case Tabs.OUTLETS:
-        view = ('OutletController');
+        view =('OutletConroller')
         break;
       case Tabs.OTHERS:
         view = ('OtherController');
