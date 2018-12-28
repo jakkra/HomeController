@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Col} from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
-import { isMobile } from "react-device-detect";
+import { isMobile, isTablet } from "react-device-detect";
 
 import LightSelector from './LightSelector'
 import LightController from './LightController'
@@ -85,7 +85,7 @@ export default class LightPage extends Component {
     if (!this.state.selectedRoom) return null;
     let view = null;
 
-    if (isMobile) {
+    if (isMobile && !isTablet) {
       view = (
         <Col md={8}>
           {this.props.rooms.map((room) => this.renderRoom(room))}
