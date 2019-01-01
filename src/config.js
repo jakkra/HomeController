@@ -8,18 +8,6 @@ export const rooms =
     name:"Vardagsrum",
     groups:[
       {
-        groupName:"WLED",
-        lights:[
-          {
-            name:"Ljusstake",
-            id:2,
-            type:DeviceTypes.WLED,
-            ip:"http://192.168.1.251"
-          },
-
-        ]
-      },
-      {
         groupName:"HUE",
         lights:[
           {
@@ -59,6 +47,23 @@ export const rooms =
           }
         ]
       }
+    ],
+  },
+  {
+    name:"Kök",
+    groups:[
+      {
+        groupName:"WLED",
+        lights:[
+          {
+            name:"Ljusstake",
+            id:2,
+            type:DeviceTypes.WLED,
+            ip:"http://192.168.1.251"
+          },
+
+        ]
+      },
     ],
     other:{
       name:"Kaffekokare",
@@ -124,7 +129,7 @@ export const rooms =
             name:"Skrivbord",
             id:4,
             type:DeviceTypes.WLED,
-            ip:"http://192.168.1.66"
+            ip:"http://192.168.1.62"
           }
         ]
       },
