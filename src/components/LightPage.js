@@ -62,9 +62,15 @@ export default class LightPage extends Component {
 
   onRoomSelected(roomName) {
     const room = this.props.rooms.find(room => room.name === roomName);
+    let newLight = this.state.selectedLight;
+
+    if (room && room.groups[0] && room.groups[0].lights[0]) {
+      newLight = room.groups[0].lights[0];
+    }
     if (room) {
       this.setState({
-        selectedRoom: room
+        selectedRoom: room,
+        selectedLight: newLight,
       });
     }
   }
