@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import { Col} from 'react-bootstrap';
+import { Col, Row, Collapse} from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from "react-device-detect";
 
@@ -35,6 +35,7 @@ export default class LightPage extends Component {
     this.onLightSelected = this.onLightSelected.bind(this);
     this.onGroupSelected = this.onGroupSelected.bind(this);
     this.onRoomSelected = this.onRoomSelected.bind(this);
+    this.renderRoomTitle = this.renderRoomTitle.bind(this);
   }
 
   componentDidMount() {
@@ -47,7 +48,7 @@ export default class LightPage extends Component {
   }
 
   renderRoomTitle(roomName) {
-    return (<div style={styles.title}>{roomName}</div>);
+    return (<div onClick={() => this.onRoomSelected(roomName)} style={styles.title}>{roomName}</div>);
   }
 
   onLightSelected(light) {
@@ -72,11 +73,15 @@ export default class LightPage extends Component {
     return (
       <Col md={12} key={room.name} >
         {this.renderRoomTitle(room.name)}
-        <LightSelector
-          lightGroups={room.groups}
-          onLightSelected={this.onLightSelected}
-          onGroupSelected={this.onGroupSelected}
-        />
+        <Collapse in={this.state.selectedRoom.name === room.name}>
+          <div>
+            <LightSelector
+              lightGroups={room.groups}
+              onLightSelected={this.onLightSelected}
+              onGroupSelected={this.onGroupSelected}
+            />
+          </div>
+        </Collapse>
       </Col>
       )
   }
@@ -107,8 +112,12 @@ export default class LightPage extends Component {
       <div style={{height: '100%'}} className="controller">
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
         <Col md={4}>
-          {this.renderRoomTitle('Controller')}
-          <LightController light={this.state.selectedLight} group={this.state.selectedGroup}/>
+          <Row>
+            {this.renderRoomTitle('Controller')}
+          </Row>
+          <Row>
+            <LightController light={this.state.selectedLight} group={this.state.selectedGroup}/>
+          </Row>
         </Col>
         {view}
       </div>
