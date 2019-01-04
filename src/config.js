@@ -46,6 +46,17 @@ export const rooms =
             ip:"http://192.168.1.188"
           }
         ]
+      },
+            {
+        groupName:"TV",
+        lights:[
+          {
+            name:"Hyperion",
+            id:99,
+            type:DeviceTypes.HYPERION,
+            ip:"http://192.168.1.30:8080"
+          },
+        ]
       }
     ],
   },

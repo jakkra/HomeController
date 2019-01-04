@@ -15,7 +15,8 @@ const constants = {
 		WLED: 'WLED',
 		HUE: 'HUE',
 		TASMOTA_OUTLET: 'TASMOTA_OUTLET',
-		RF_OUTLET: 'RF_OUTLET'
+		RF_OUTLET: 'RF_OUTLET',
+		HYPERION: 'HYPERION'
 	}
 };
 

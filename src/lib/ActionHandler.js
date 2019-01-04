@@ -23,10 +23,30 @@ export function handleLightAction(light, action, options) {
     case DeviceTypes.TASMOTA_OUTLET:
       return handleSonoffTasmotaOutletAction(light.ip, action);
     case DeviceTypes.RF_OUTLET:
-      return handleRfOutlet(light.url, action);
+      return handleRfOutlet(light.ip, action);
+    case DeviceTypes.HYPERION:
+      return handleHyperion(light.ip, action);
     default:
       return new Promise.reject(new Error(`Light type ${light.type} not implemented/supported`));
   }
+}
+
+export function handleHyperion(url, action) {
+  return new Promise((resolve, reject) => {
+    switch (action) {
+      case Actions.ON:
+        url += '/hyperion/on';
+        break;
+      case Actions.OFF:
+        url += '/hyperion/off';
+        break;
+      default:
+        return reject(new Error(`Action ${action} not implemented/supported for wled`));
+    }
+    console.log(url)
+    return fetch(url, { mode: 'no-cors' })
+    .then(checkStatus);
+  });
 }
 
 export function handleRfOutlet(url, action) {
