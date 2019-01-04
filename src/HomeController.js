@@ -4,14 +4,17 @@ import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb, faPlug, faBars } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer } from 'react-toastify';
+import { isMobile, isTablet } from "react-device-detect";
 
 import LightPage from './components/LightPage'
+import Clock from './components/Clock'
 import { Tabs } from './constants';
 import { rooms } from './config';
 
 
 const styles = {
   container: {
+    padding: 25
   },
   toolbar: {
     position: 'fixed',
@@ -110,9 +113,12 @@ export default class HomeController extends Component {
     return (
       <Col style={styles.container} >
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
-        <div style={{paddingBottom: 50}}>
+        <Row style={{paddingBottom: 50}}>
           {this.renderControllerView()}
-        </div>
+        </Row>
+        <Row>
+          {!(isMobile && !isTablet) ? <Clock /> : null}
+        </Row>
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12} >
             <Row xs={12}>
