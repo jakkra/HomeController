@@ -58,6 +58,8 @@ export default class LightController extends Component {
       case DeviceTypes.TASMOTA_OUTLET:
       case DeviceTypes.RF_OUTLET:
         return this.renderOnOff(light);
+      case DeviceTypes.HYPERION:
+        return this.renderOnOff(light);
       default:
         return (<div>Not Implemented: {light.type}</div>);
     }
@@ -185,7 +187,7 @@ export default class LightController extends Component {
     let description = null;
 
     if (this.props.light) {
-      description = this.props.light.name + ' ' + this.props.light.type;
+      description = this.props.light.name;
       controller = this.renderControllerDependingOnLight(this.props.light);
     } else if( this.props.group) {
       description = this.props.group.groupName;
