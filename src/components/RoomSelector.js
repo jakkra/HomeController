@@ -28,7 +28,6 @@ export default class RoomSelector extends Component {
   }
 
   onRoomClicked(area) {
-  	console.log(area);
   	this.props.onGroupSelected(area.name);
   }
 

@@ -67,7 +67,6 @@ export default class InformationPanel extends React.Component {
   }
 
   handleNewWeather(weather) {
-    console.log(weather)
     this.setState({
       weather: weather,
     });

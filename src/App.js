@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import HomeController from './HomeController'
-
-import moment from 'moment';
-moment.locale('sv-SE')
+import 'moment/locale/sv';
 
 class App extends Component {
   render() {
