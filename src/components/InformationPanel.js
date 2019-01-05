@@ -2,6 +2,7 @@ import React from 'react';
 
 import moment from 'moment';
 import { Col, Row } from 'react-bootstrap';
+import { getCurrentWeather } from '../lib/smhi';
 
 const styles = {
   container: {
@@ -29,22 +30,28 @@ const styles = {
   },
 };
 
-export default class Clock extends React.Component {
+export default class InformationPanel extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       date: new moment(),
-      temperature: 22
+      temperature: 22,
+      weather: null,
     };
+
+    this.refreshWeather = this.refreshWeather.bind(this);
+    this.handleNewWeather = this.handleNewWeather.bind(this);
   }
 
   componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
+    this.timerClockID = setInterval(() => this.tick(), 1000);
+    this.timerClockID = setInterval(() => this.refreshWeather(), 10 * 60 * 1000);
+    this.refreshWeather();
   }
 
   componentWillUnmount() {
-    clearInterval(this.timerID);
+    clearInterval(this.timerClockID);
   }
 
   tick() {
@@ -53,8 +60,36 @@ export default class Clock extends React.Component {
     });
   }
 
+  refreshWeather() {
+    getCurrentWeather()
+      .then(this.handleNewWeather)
+      .catch(err => console.log(err));
+  }
+
+  handleNewWeather(weather) {
+    console.log(weather)
+    this.setState({
+      weather: weather,
+    });
+  }
+
+  renderCurrentWeather(weather) {
+    if (weather) {
+      return (
+        <div>
+          <Col xs={12} />
+            <p style={styles.smallText}>
+            {`${this.state.weather.temp} °C (Känns som ${this.state.weather.windChill} °C)`}
+            </p>
+          <Col />
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
-    console.log("render clock")
     let day = this.state.date.format('dddd, LL');
     day = day.charAt(0).toUpperCase() + day.slice(1);
 
@@ -76,11 +111,7 @@ export default class Clock extends React.Component {
           </Row>
         </Row>
         <Row>
-          <Col xs={12} />
-          <p style={styles.smallText}>
-            {this.state.temperature} °C
-          </p>
-          <Col />
+          {this.renderCurrentWeather(this.state.weather)}
         </Row>
       </div>
     );

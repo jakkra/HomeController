@@ -2,6 +2,11 @@ import { DeviceTypes } from './constants';
 
 export const mirrorUrl = 'http://192.168.1.98:3001';
 
+export const smhiCoord = {
+  longitude: 12.987,
+  latitude: 55.61
+}
+
 export const rooms =
 [
   {

@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from "react-device-detect";
 
 import LightPage from './components/LightPage'
-import Clock from './components/Clock'
+import InformationPanel from './components/InformationPanel'
 import { Tabs } from './constants';
 import { rooms } from './config';
 
@@ -113,11 +113,11 @@ export default class HomeController extends Component {
     return (
       <Col style={styles.container} >
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
-        <Row style={{paddingBottom: 50}}>
+        <div style={{paddingBottom: 50}}>
           {this.renderControllerView()}
-        </Row>
+        </div>
         <Row>
-          {!(isMobile && !isTablet) ? <Clock /> : null}
+          {!(isMobile && !isTablet) ? <InformationPanel /> : null}
         </Row>
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12} >
