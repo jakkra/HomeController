@@ -56,14 +56,14 @@ export default class RoomSelector extends Component {
         <ImageMapper
         	src={firstFloor}
         	map={first}
-        	width={300}
+        	width={280}
         	imgWidth={1550}
   	    	onClick={evt => this.onRoomClicked(evt)}
       	/>
       	<ImageMapper
         	src={secondFloor}
         	map={second}
-    	 		width={300}
+    	 		width={280}
     	 		imgWidth={480}
   	    	onClick={evt => this.onRoomClicked(evt)}
       	/>

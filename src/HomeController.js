@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLightbulb, faPlug, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faLightbulb, faPlug, faBars, faShoppingBasket, faThermometerHalf } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from "react-device-detect";
 
 import LightPage from './components/LightPage'
 import InformationPanel from './components/InformationPanel'
+import Tasks from './components/Tasks'
+import TemperatureGraph from './components/TemperatureGraph'
 import { Tabs } from './constants';
 import { rooms } from './config';
 
@@ -39,6 +41,7 @@ const styles = {
   toolbarIcon: {
     color: 'white',
     fontSize: '1.5em',
+    minWidth: 20
   },
 };
 
@@ -50,11 +53,11 @@ export default class HomeController extends Component {
       selectedTab: Tabs.LIGHTS,
     }
 
-    this.renderControllerView = this.renderControllerView.bind(this);
+    this.renderTabView = this.renderTabView.bind(this);
     this.renderButton = this.renderButton.bind(this);
   }
 
-  renderButton(tabType, onClickThis) {
+  renderButton(tabType) {
     let image;
     let buttonStyle = (this.state.selectedTab) === tabType ? "success" : "primary";
     
@@ -67,6 +70,12 @@ export default class HomeController extends Component {
         break;
       case Tabs.OTHERS:
         image = faBars;
+        break;
+      case Tabs.TASKS:
+        image = faShoppingBasket;
+        break;
+      case Tabs.TEMPERATURE:
+        image = faThermometerHalf;
         break;
       default:
         image = faBars;
@@ -89,18 +98,21 @@ export default class HomeController extends Component {
     );
   }
 
-  renderControllerView() {
+  renderTabView() {
     let view = null;
 
     switch(this.state.selectedTab) {
       case Tabs.LIGHTS:
         view = (<LightPage rooms={rooms}/>);
         break;
-      case Tabs.OUTLETS:
-        view =('OutletConroller')
+      case Tabs.TASKS:
+        view = <Tasks />
         break;
-      case Tabs.OTHERS:
-        view = ('OtherController');
+      case Tabs.OUTLETS:
+        view = ('OutletConroller')
+        break;
+      case Tabs.TEMPERATURE:
+        view = <TemperatureGraph />
         break;
       default:
         break;
@@ -114,7 +126,7 @@ export default class HomeController extends Component {
       <Col style={styles.container} >
         <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
         <div style={{paddingBottom: 50}}>
-          {this.renderControllerView()}
+          {this.renderTabView()}
         </div>
         <Row>
           {!(isMobile && !isTablet) ? <InformationPanel /> : null}
@@ -122,14 +134,17 @@ export default class HomeController extends Component {
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12} >
             <Row xs={12}>
-              <Col xs={4}>
-                {this.renderButton(Tabs.LIGHTS, this.props.onLightsSelected)}
+              <Col xs={3}>
+                {this.renderButton(Tabs.LIGHTS)}
               </Col>
-              <Col xs={4}>
-                {this.renderButton(Tabs.OUTLETS, this.props.onOutletsSelected)}
+              <Col xs={3}>
+                {this.renderButton(Tabs.TASKS)}
               </Col>
-              <Col xs={4}>
-                {this.renderButton(Tabs.OTHERS, this.props.onOthersSelected)}
+              <Col xs={3}>
+                {this.renderButton(Tabs.TEMPERATURE)}
+              </Col>
+              <Col xs={3}>
+                {this.renderButton(Tabs.OUTLETS)}
               </Col>
             </Row>
           </Col>

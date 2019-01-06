@@ -12,20 +12,20 @@ const styles = {
     paddingLeft: 10
   },
   clock: {
-    color: 'black',
+    color: '#284257',
     fontSize: '3em',
     lineHeight: 1,
     lineWidth: 1,
   },
   clockSeconds: {
-    color: 'black',
+    color: '#284257',
     fontSize: '0.5em',
     verticalAlign: 'top',
     paddingLeft: 1,
     textAlign: 'left',
   },
   smallText: {
-    color: 'black',
+    color: '#284257',
     fontSize: '1.2em',
   },
 };

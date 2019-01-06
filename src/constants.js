@@ -2,6 +2,7 @@ const constants = {
   Tabs: {
 	  LIGHTS: 'lights',
 	  OUTLETS: 'outlets',
+	  TASKS: 'tasks',
 	  OTHERS: 'others',
 	},
 	Actions: {
