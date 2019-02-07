@@ -3,6 +3,7 @@ const constants = {
 	  LIGHTS: 'lights',
 	  OUTLETS: 'outlets',
 	  TASKS: 'tasks',
+	  TEMPERATURE: 'temperature',
 	  OTHERS: 'others',
 	},
 	Actions: {
@@ -17,7 +18,8 @@ const constants = {
 		HUE: 'HUE',
 		TASMOTA_OUTLET: 'TASMOTA_OUTLET',
 		RF_OUTLET: 'RF_OUTLET',
-		HYPERION: 'HYPERION'
+		HYPERION: 'HYPERION',
+		IR_SENDER_TOGGLE: 'IR_SENDER_TOGGLE',
 	}
 };
 

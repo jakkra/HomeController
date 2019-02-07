@@ -60,6 +60,8 @@ export default class LightController extends Component {
         return this.renderOnOff(light);
       case DeviceTypes.HYPERION:
         return this.renderOnOff(light);
+      case DeviceTypes.IR_SENDER_TOGGLE:
+        return this.renderToggle(light);
       default:
         return (<div>Not Implemented: {light.type}</div>);
     }
@@ -115,6 +117,16 @@ export default class LightController extends Component {
     );
   }
 
+  renderToggle(light) {
+    return (
+      <div>
+        <ButtonGroup justified>
+          <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionToggle(light)} >TOGGLE</Button>
+        </ButtonGroup>
+      </div>
+    );
+  }
+
   onBrightnessChange(value) {
     this.setState({ hueBrightness: value });
   }
@@ -163,6 +175,12 @@ export default class LightController extends Component {
 
   handleControllerActionOnOff(light, isOn) {
     handleLightAction(light, isOn ? Actions.ON : Actions.OFF)
+    .then(console.log('Success'))
+    .catch(err => console.log('Should display error to user', err));
+  }
+
+  handleControllerActionToggle(light) {
+    handleLightAction(light, Actions.TOGGLE)
     .then(console.log('Success'))
     .catch(err => console.log('Should display error to user', err));
   }
