@@ -78,10 +78,10 @@ export const rooms =
         groupName:"WLED",
         lights:[
           {
-            name:"Ljusstake",
+            name:"Slinga",
             id:2,
             type:DeviceTypes.WLED,
-            ip:"http://192.168.1.251"
+            ip:"http://192.168.1.187"
           },
 
         ]
