@@ -121,9 +121,8 @@ export const rooms =
           {
             name:"Ljusslinga",
             id:6,
-            type:DeviceTypes.RF_OUTLET,
-            url:"http://192.168.1.98:3001/api/serial/outlet:1:",
-
+            type:DeviceTypes.TASMOTA_OUTLET,
+            ip:"http://192.168.1.200"
           }
         ]
       }
