@@ -46,8 +46,8 @@ export function getJourney(callback) {
     .then(res => res.routes);
 }
 
-export function getTemperaturesSevenDays(callback) {
-  const url = mirrorUrl + '/api/temperatures7days';
+export function getTemperaturesSevenDays(source, callback) {
+  const url = mirrorUrl + '/api/temperatures7days/' + source;
 
   return fetch(url)
     .then(checkStatus)

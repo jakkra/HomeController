@@ -7,6 +7,8 @@ export const smhiCoord = {
   latitude: 55.61
 }
 
+export const temperatureSources = [{ key: 'inside', name: 'inomhus' }, { key: 'outside', name: 'utomhus' }];
+
 export const rooms =
 [
   {
@@ -122,7 +124,7 @@ export const rooms =
             name:"Ljusslinga",
             id:6,
             type:DeviceTypes.TASMOTA_OUTLET,
-            ip:"http://192.168.1.200"
+            ip:"http://192.168.1.199"
           }
         ]
       }

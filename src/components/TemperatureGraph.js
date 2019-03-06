@@ -1,8 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 
+import { temperatureSources } from '../config';
+
 import { Row } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import SwipeableViews from 'react-swipeable-views';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 import { getTemperaturesSevenDays } from '../lib/fetch';
 
@@ -14,8 +20,21 @@ const styles = {
   chartTitle: {
     color: '#284257',
     fontSize: '1.3em'
-  }
+  },
+  graphTitle: {
+    overflow: "hidden",
+    height: "100%",
+    width: "100%"
+  },
+  swipeDirectionIcon: {
+    color: 'black',
+    fontSize: '1em',
+    minWidth: 10,
+    marginLeft: 20,
+    marginRight: 20
+  },
 };
+
 
 export default class TemperatureGraph extends React.Component {
   static propTypes = {
@@ -27,10 +46,11 @@ export default class TemperatureGraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      temperatures: [],
+      temperatures: {},
     };
     this.days = [];
     this.handleNewTemp = this.handleNewTemp.bind(this);
+    this.handleSourceChange = this.handleSourceChange.bind(this);
     this.refreshTemps = this.refreshTemps.bind(this);
     this.formatX = this.formatX.bind(this);
     this.formatY = this.formatY.bind(this);
@@ -46,17 +66,25 @@ export default class TemperatureGraph extends React.Component {
   }
 
   refreshTemps() {
-    getTemperaturesSevenDays()
-      .then(this.handleNewTemp)
-      .catch(err => console.log(err));
+    temperatureSources.forEach(source => {
+      getTemperaturesSevenDays(source.key)
+        .then(res => this.handleNewTemp(source.key, res))
+        .catch(err => console.log(err));
+    });
+    return;
   }
 
-  handleNewTemp(temps) {
+  handleNewTemp(source, temps) {
     const t = temps.filter(function(obj) {
       return obj.temperature !== 0;
     });
+    const prevTemps = this.state.temperatures;
+    prevTemps[source] = t;
+
+    console.log('prev', prevTemps);
     this.setState({
-      temperatures: t,
+      allTemperatures: prevTemps,
+      currentSource: temperatureSources[0]
     });
   }
 
@@ -73,22 +101,48 @@ export default class TemperatureGraph extends React.Component {
     return y + ' °C';
   }
 
+  handleSourceChange(newIndex) {
+    this.days = [];
+    this.setState({
+      currentSource: temperatureSources[newIndex % temperatureSources.length]
+    });
+  }
+
   render() {
+    if (!this.state.temperatures[temperatureSources[0].key]) return null;
+
     return (
       <div>
-        <Row>
-          <p style={styles.chartTitle}>
-            Temperatur inomhus
-          </p>
-        </Row>
+        <SwipeableViews
+          ignoreNativeScroll={false}
+          enableMouseEvents
+          onChangeIndex={this.handleSourceChange}
+        >
+          {temperatureSources.map((source, index) => {
+            let iconLeft = null;
+            let iconRight = null;
+            if (index == temperatureSources.length - 1) {
+              iconLeft = <FontAwesomeIcon icon={faArrowLeft} style={styles.swipeDirectionIcon} />;
+            } else {
+              iconRight = <FontAwesomeIcon icon={faArrowRight} style={styles.swipeDirectionIcon} />;
+            }
+            return (
+              <Row style={styles.graphTitle} key={source.key}>
+                <p style={styles.chartTitle}>
+                  {iconLeft} Temperatur {source.name} {iconRight}
+                </p>
+              </Row>
+            );
+          })}
+        </SwipeableViews>
         <Row style={styles.container}>
           <ResponsiveContainer width='90%' aspect={2.5}>
             <AreaChart
-              title="Test title"
-              data={this.state.temperatures}
+              title="A title"
+              data={this.state.temperatures[this.state.currentSource.key]}
               >
               <XAxis
-                interval={Math.round(this.state.temperatures.length / 7)}
+                interval={Math.round(this.state.temperatures[this.state.currentSource.key].length / 7)}
                 tickFormatter={this.formatX}
                 dataKey="createdAt"
               />
