@@ -121,7 +121,7 @@ export default class TemperatureGraph extends React.Component {
           {temperatureSources.map((source, index) => {
             let iconLeft = null;
             let iconRight = null;
-            if (index == temperatureSources.length - 1) {
+            if (index === temperatureSources.length - 1) {
               iconLeft = <FontAwesomeIcon icon={faArrowLeft} style={styles.swipeDirectionIcon} />;
             } else {
               iconRight = <FontAwesomeIcon icon={faArrowRight} style={styles.swipeDirectionIcon} />;

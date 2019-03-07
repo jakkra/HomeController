@@ -57,12 +57,7 @@ export const rooms =
             id:98,
             type:DeviceTypes.IR_SENDER_TOGGLE,
             ip:"http://192.168.1.180:80/msg?code=4C:RC5:12"
-          }
-        ]
-      },
-            {
-        groupName:"TV",
-        lights:[
+          },
           {
             name:"Hyperion",
             id:99,
@@ -70,7 +65,7 @@ export const rooms =
             ip:"http://192.168.1.30:8080"
           },
         ]
-      }
+      },
     ],
   },
   {
