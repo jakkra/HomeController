@@ -20,6 +20,25 @@ export function getTasks(callback) {
     .then(res => res.tasks);
 }
 
+export function createTask(title) {
+  const url = mirrorUrl + '/api/tasks';
+
+  return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ title: title }),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(checkStatus)
+    .then(res => res.json())
+    .then(json => { 
+      if (json.success !== true) {
+        throw new Error();
+      }
+    });
+}
+
 export function getPlantMoistureLevel(callback) {
   const url = mirrorUrl + '/api/moisture/latest';
 

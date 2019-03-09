@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import { Col, Row, Collapse} from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from "react-device-detect";
 
 import LightSelector from './LightSelector'
@@ -116,7 +115,6 @@ export default class LightPage extends Component {
 
     return (
       <div style={{height: '100%'}} className="controller">
-        <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
         <Col md={4}>
           <Row>
             {this.renderRoomTitle('Controller')}

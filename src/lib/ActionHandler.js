@@ -1,8 +1,6 @@
 import { Actions, DeviceTypes } from '../constants';
 import { mirrorUrl } from '../config';
 
-console.log('Mirror', mirrorUrl);
-
 const checkStatus = res => {
   return new Promise((resolve, reject) => {
     if (res.status >= 200 || res.status === 409 || res.status === 0) { // no-cors 

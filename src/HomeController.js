@@ -124,7 +124,7 @@ export default class HomeController extends Component {
   render() {
     return (
       <Col style={styles.container} >
-        <ToastContainer autoClose={3000} position="top-center" closeOnClick/>
+        <ToastContainer autoClose={3000} position="bottom-center" closeOnClick/>
         <div style={{paddingBottom: 50}}>
           {this.renderTabView()}
         </div>
