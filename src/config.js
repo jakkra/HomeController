@@ -28,7 +28,7 @@ export const rooms =
             id:9,
             type:DeviceTypes.HUE,
             hueName:"Vardagsrum-soffa-spot"
-          }
+          },
         ]
       },
       {
@@ -40,12 +40,12 @@ export const rooms =
             type:DeviceTypes.TASMOTA_OUTLET,
             ip:"http://192.168.1.129"
           },
-          {
+          /*{
             name:"Klocka",
             id:12,
             type:DeviceTypes.TASMOTA_OUTLET,
             ip:"http://192.168.1.208"
-          },
+          },*/
           {
             name:"Golvlampa",
             id:13,
@@ -109,6 +109,12 @@ export const rooms =
             id:16,
             type:DeviceTypes.HUE,
             hueName:"Sovrum-spot"
+          },
+          {
+            name:"Spot spegel",
+            id:77,
+            type:DeviceTypes.HUE,
+            hueName:"Sovrum-spot-mirror"
           }
         ]
       },
@@ -176,4 +182,37 @@ export const rooms =
       }
     ]
   },
+  {
+    name:"Allrum",
+    groups:[
+    {
+      groupName:"HUE",
+      lights:[
+        {
+          name:"Spot fotölj",
+          id:71,
+          type:DeviceTypes.HUE,
+          hueName:"Allrum-spot-left"
+        },
+        {
+          name:"Spot spegel",
+          id:70,
+          type:DeviceTypes.HUE,
+          hueName:"Allrum-spot-right"
+        }
+      ]
+    },
+    {
+      groupName:"OTHER",
+      lights:[
+        {
+          name:"Bordslampa",
+          id:6,
+          type:DeviceTypes.TASMOTA_OUTLET,
+          ip:"http://192.168.1.208"
+        }
+      ]
+    }
+  ]
+}
 ]
