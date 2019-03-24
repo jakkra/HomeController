@@ -29,6 +29,12 @@ export const rooms =
             type:DeviceTypes.HUE,
             hueName:"Vardagsrum-soffa-spot"
           },
+          {
+            name:"Matbord",
+            id:78,
+            type:DeviceTypes.HUE,
+            hueName:"Vardagsrum-matbord"
+          },
         ]
       },
       {
@@ -192,13 +198,13 @@ export const rooms =
           name:"Spot fotölj",
           id:71,
           type:DeviceTypes.HUE,
-          hueName:"Allrum-spot-left"
+          hueName:"Allrum-spot-chair"
         },
         {
           name:"Spot spegel",
           id:70,
           type:DeviceTypes.HUE,
-          hueName:"Allrum-spot-right"
+          hueName:"Allrum-spot-mirror"
         }
       ]
     },
