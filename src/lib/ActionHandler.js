@@ -24,14 +24,14 @@ export function handleLightAction(light, action, options) {
       return handleRfOutlet(light.ip, action);
     case DeviceTypes.HYPERION:
       return handleHyperion(light.ip, action);
-    case DeviceTypes.IR_SENDER_TOGGLE:
-      return handleIRToggle(light.ip, action);
+    case DeviceTypes.TOGGLE:
+      return handleToggle(light.ip, action);
     default:
       return new Promise.reject(new Error(`Light type ${light.type} not implemented/supported`));
   }
 }
 
-export function handleIRToggle(ip, action) {
+export function handleToggle(ip, action) {
   return new Promise((resolve, reject) => {
     let url = ip;
 

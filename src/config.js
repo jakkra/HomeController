@@ -61,7 +61,7 @@ export const rooms =
           {
             name:"TV",
             id:98,
-            type:DeviceTypes.IR_SENDER_TOGGLE,
+            type:DeviceTypes.TOGGLE,
             ip:"http://192.168.1.180:80/msg?code=4C:RC5:12"
           },
           {
@@ -85,6 +85,18 @@ export const rooms =
             id:2,
             type:DeviceTypes.WLED,
             ip:"http://192.168.1.187"
+          },
+
+        ]
+      },
+      {
+        groupName:"OTHER",
+        lights:[
+          {
+            name:"Kattskål",
+            id:2,
+            type:DeviceTypes.TOGGLE,
+            ip:"http://192.168.1.27/feed"
           },
 
         ]

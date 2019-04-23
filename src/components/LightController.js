@@ -60,7 +60,7 @@ export default class LightController extends Component {
         return this.renderOnOff(light);
       case DeviceTypes.HYPERION:
         return this.renderOnOff(light);
-      case DeviceTypes.IR_SENDER_TOGGLE:
+      case DeviceTypes.TOGGLE:
         return this.renderToggle(light);
       default:
         return (<div>Not Implemented: {light.type}</div>);
