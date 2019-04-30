@@ -3,7 +3,8 @@ import { mirrorUrl } from '../config';
 
 const checkStatus = res => {
   return new Promise((resolve, reject) => {
-    if (res.status >= 200 || res.status === 409 || res.status === 0) { // no-cors 
+    if (res.status >= 200 || res.status === 409 || res.status === 0) {
+      // no-cors
       return resolve(res);
     } else {
       const error = new Error(`StatusCode: ${res.status}, message: ${res.statusText}`);
@@ -43,8 +44,7 @@ export function handleToggle(ip, action) {
       default:
         return reject(new Error(`Action ${action} not implemented/supported for IR TOGGLE`));
     }
-    return fetch(url, { mode: 'no-cors' })
-    .then(checkStatus);
+    return fetch(url, { mode: 'no-cors' }).then(checkStatus);
   });
 }
 
@@ -60,15 +60,13 @@ export function handleHyperion(url, action) {
       default:
         return reject(new Error(`Action ${action} not implemented/supported for wled`));
     }
-    console.log(url)
-    return fetch(url, { mode: 'no-cors' })
-    .then(checkStatus);
+    console.log(url);
+    return fetch(url, { mode: 'no-cors' }).then(checkStatus);
   });
 }
 
 export function handleRfOutlet(url, action) {
   return new Promise((resolve, reject) => {
-
     switch (action) {
       case Actions.ON:
         url += '1';
@@ -79,9 +77,8 @@ export function handleRfOutlet(url, action) {
       default:
         return reject(new Error(`Action ${action} not implemented/supported for wled`));
     }
-    console.log(url)
-    return fetch(url, { mode: 'no-cors' })
-    .then(checkStatus);
+    console.log(url);
+    return fetch(url, { mode: 'no-cors' }).then(checkStatus);
   });
 }
 
@@ -102,8 +99,7 @@ export function handleSonoffTasmotaOutletAction(ip, action) {
       default:
         return reject(new Error(`Action ${action} not implemented/supported for sonoff-tasmota-outlet`));
     }
-    return fetch(url)
-    .then(checkStatus);
+    return fetch(url).then(checkStatus);
   });
 }
 
@@ -116,19 +112,19 @@ function handleHue(light, action, params) {
       case Actions.ON:
         options = {
           on: true,
-        }
+        };
         break;
       case Actions.OFF:
         options = {
           on: false,
-        }
+        };
         break;
       case Actions.BRIGHTNESS:
         if (params && params.brightness) {
           options = {
             on: true,
             bri: params.brightness,
-          }
+          };
         } else {
           return reject(new Error(`Action ${action} requires params with brightness set for hue-light`));
         }
@@ -141,13 +137,13 @@ function handleHue(light, action, params) {
     fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: light.hueName,
         options: options,
-      })
-    })
+      }),
+    });
   });
 }
 
@@ -179,7 +175,6 @@ function handleWled(light, action, params) {
         return reject(new Error(`Action ${action} not implemented/supported for wled`));
     }
     console.log(url);
-    return fetch(url, { mode: 'no-cors' })
-    .then(checkStatus);
+    return fetch(url, { mode: 'no-cors' }).then(checkStatus);
   });
 }

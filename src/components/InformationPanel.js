@@ -9,7 +9,7 @@ const styles = {
     textAlign: 'left',
     position: 'absolute',
     bottom: 60,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   clock: {
     color: '#284257',
@@ -31,7 +31,6 @@ const styles = {
 };
 
 export default class InformationPanel extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -77,9 +76,9 @@ export default class InformationPanel extends React.Component {
       return (
         <div>
           <Col xs={12} />
-            <p style={styles.smallText}>
+          <p style={styles.smallText}>
             {`${this.state.weather.temp} °C (Känns som ${this.state.weather.windChill} °C)`}
-            </p>
+          </p>
           <Col />
         </div>
       );
@@ -109,9 +108,7 @@ export default class InformationPanel extends React.Component {
             </Col>
           </Row>
         </Row>
-        <Row>
-          {this.renderCurrentWeather(this.state.weather)}
-        </Row>
+        <Row>{this.renderCurrentWeather(this.state.weather)}</Row>
       </div>
     );
   }

@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Col, Row, Collapse} from 'react-bootstrap';
-import { isMobile, isTablet } from "react-device-detect";
+import { Col, Row, Collapse } from 'react-bootstrap';
+import { isMobile, isTablet } from 'react-device-detect';
 
-import LightSelector from './LightSelector'
-import LightController from './LightController'
-import RoomSelector from './RoomSelector'
-
+import LightSelector from './LightSelector';
+import LightController from './LightController';
+import RoomSelector from './RoomSelector';
 
 const styles = {
   title: {
@@ -17,7 +16,6 @@ const styles = {
 };
 
 export default class LightPage extends Component {
-
   static propTypes = {
     rooms: PropTypes.array,
   };
@@ -28,8 +26,8 @@ export default class LightPage extends Component {
     this.state = {
       selectedLight: null,
       selectedGroup: null,
-      selectedRoom: null
-    }
+      selectedRoom: null,
+    };
 
     this.onLightSelected = this.onLightSelected.bind(this);
     this.onGroupSelected = this.onGroupSelected.bind(this);
@@ -39,7 +37,7 @@ export default class LightPage extends Component {
 
   componentDidMount() {
     if (this.props.rooms && this.props.rooms[0] && this.props.rooms[0].groups && this.props.rooms[0].groups[0]) {
-      this.setState({ 
+      this.setState({
         selectedLight: this.props.rooms[0].groups[0].lights[0],
         selectedRoom: this.props && this.props.rooms ? this.props.rooms[0] : null,
       });
@@ -47,7 +45,11 @@ export default class LightPage extends Component {
   }
 
   renderRoomTitle(roomName) {
-    return (<div onClick={() => this.onRoomSelected(roomName)} style={styles.title}>{roomName}</div>);
+    return (
+      <div onClick={() => this.onRoomSelected(roomName)} style={styles.title}>
+        {roomName}
+      </div>
+    );
   }
 
   onLightSelected(light) {
@@ -76,7 +78,7 @@ export default class LightPage extends Component {
 
   renderRoom(room) {
     return (
-      <Col md={12} key={room.name} >
+      <Col md={12} key={room.name}>
         {this.renderRoomTitle(room.name)}
         <Collapse in={this.state.selectedRoom.name === room.name}>
           <div>
@@ -88,7 +90,7 @@ export default class LightPage extends Component {
           </div>
         </Collapse>
       </Col>
-      )
+    );
   }
 
   render() {
@@ -96,31 +98,24 @@ export default class LightPage extends Component {
     let view = null;
 
     if (isMobile && !isTablet) {
-      view = (
-        <Col md={8}>
-          {this.props.rooms.map((room) => this.renderRoom(room))}
-        </Col>);
+      view = <Col md={8}>{this.props.rooms.map(room => this.renderRoom(room))}</Col>;
     } else {
       view = (
         <div>
+          <Col md={4}>{this.renderRoom(this.state.selectedRoom)}</Col>
           <Col md={4}>
-            {this.renderRoom(this.state.selectedRoom)}
-          </Col>
-          <Col md={4}>
-            <RoomSelector onGroupSelected={this.onRoomSelected}/>
+            <RoomSelector onGroupSelected={this.onRoomSelected} />
           </Col>
         </div>
-        );
+      );
     }
 
     return (
-      <div style={{height: '100%'}} className="controller">
+      <div style={{ height: '100%' }} className="controller">
         <Col md={4}>
+          <Row>{this.renderRoomTitle('Controller')}</Row>
           <Row>
-            {this.renderRoomTitle('Controller')}
-          </Row>
-          <Row>
-            <LightController light={this.state.selectedLight} group={this.state.selectedGroup}/>
+            <LightController light={this.state.selectedLight} group={this.state.selectedGroup} />
           </Row>
         </Col>
         {view}
@@ -128,5 +123,3 @@ export default class LightPage extends Component {
     );
   }
 }
-
-

@@ -7,41 +7,38 @@ import { Row } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import SwipeableViews from 'react-swipeable-views';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { getTemperaturesSevenDays } from '../lib/fetch';
 
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   chartTitle: {
     color: '#284257',
-    fontSize: '1.3em'
+    fontSize: '1.3em',
   },
   graphTitle: {
-    overflow: "hidden",
-    height: "100%",
-    width: "100%"
+    overflow: 'hidden',
+    height: '100%',
+    width: '100%',
   },
   swipeDirectionIcon: {
     color: 'black',
     fontSize: '1em',
     minWidth: 10,
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
 };
 
-
 export default class TemperatureGraph extends React.Component {
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -84,7 +81,7 @@ export default class TemperatureGraph extends React.Component {
     console.log('prev', prevTemps);
     this.setState({
       allTemperatures: prevTemps,
-      currentSource: temperatureSources[0]
+      currentSource: temperatureSources[0],
     });
   }
 
@@ -104,7 +101,7 @@ export default class TemperatureGraph extends React.Component {
   handleSourceChange(newIndex) {
     this.days = [];
     this.setState({
-      currentSource: temperatureSources[newIndex % temperatureSources.length]
+      currentSource: temperatureSources[newIndex % temperatureSources.length],
     });
   }
 
@@ -113,11 +110,7 @@ export default class TemperatureGraph extends React.Component {
 
     return (
       <div>
-        <SwipeableViews
-          ignoreNativeScroll={false}
-          enableMouseEvents
-          onChangeIndex={this.handleSourceChange}
-        >
+        <SwipeableViews ignoreNativeScroll={false} enableMouseEvents onChangeIndex={this.handleSourceChange}>
           {temperatureSources.map((source, index) => {
             let iconLeft = null;
             let iconRight = null;
@@ -136,30 +129,17 @@ export default class TemperatureGraph extends React.Component {
           })}
         </SwipeableViews>
         <Row style={styles.container}>
-          <ResponsiveContainer width='90%' aspect={2.5}>
-            <AreaChart
-              title="A title"
-              data={this.state.temperatures[this.state.currentSource.key]}
-              >
+          <ResponsiveContainer width="90%" aspect={2.5}>
+            <AreaChart title="A title" data={this.state.temperatures[this.state.currentSource.key]}>
               <XAxis
                 interval={Math.round(this.state.temperatures[this.state.currentSource.key].length / 7)}
                 tickFormatter={this.formatX}
                 dataKey="createdAt"
               />
-              <YAxis
-                type="number"
-                domain={['dataMin - 1']}
-                tickFormatter={this.formatY}
-              />
+              <YAxis type="number" domain={['dataMin - 1']} tickFormatter={this.formatY} />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <Area
-                name="Temperatur"
-                type="monotone"
-                dataKey="temperature"
-                stroke="#FFA500"
-                fill='#8884d8'
-              />
-               <Tooltip />
+              <Area name="Temperatur" type="monotone" dataKey="temperature" stroke="#FFA500" fill="#8884d8" />
+              <Tooltip />
             </AreaChart>
           </ResponsiveContainer>
         </Row>

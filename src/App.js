@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import HomeController from './HomeController'
+import HomeController from './HomeController';
 import 'moment/locale/sv';
 
 if (new Date().getHours() > 20 || new Date().getHours() < 6) {

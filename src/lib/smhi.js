@@ -114,9 +114,9 @@ function getHeatIndex(tempC, RH) {
     0.00085282 * T * RH * RH -
     0.00000199 * T * T * RH * RH;
   if (RH > 13 && T >= 80 && T <= 112) {
-    feelsLikeF -= (13 - RH) / 4 * Math.sqrt((17 - Math.abs(T - 95)) / 17);
+    feelsLikeF -= ((13 - RH) / 4) * Math.sqrt((17 - Math.abs(T - 95)) / 17);
   } else if (RH > 85 && T >= 80 && T <= 87) {
-    feelsLikeF -= (RH - 85) / 10 * ((87 - T) / 5);
+    feelsLikeF -= ((RH - 85) / 10) * ((87 - T) / 5);
   }
   const feelsLikeC = (feelsLikeF - 32) * (parseFloat(5) / parseFloat(9));
   return feelsLikeC.toFixed(1);

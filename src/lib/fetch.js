@@ -24,15 +24,15 @@ export function createTask(title) {
   const url = mirrorUrl + '/api/tasks';
 
   return fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({ title: title }),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    })
+    method: 'POST',
+    body: JSON.stringify({ title: title }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
     .then(checkStatus)
     .then(res => res.json())
-    .then(json => { 
+    .then(json => {
       if (json.success !== true) {
         throw new Error();
       }
@@ -113,4 +113,3 @@ export function get3DPrinterState(callback) {
     });
 }
 */
-

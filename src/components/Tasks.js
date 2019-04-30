@@ -3,15 +3,13 @@ import React from 'react';
 import { Col, Row, Form, FormControl, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingBasket, faPlus, faListUl } from '@fortawesome/free-solid-svg-icons'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingBasket, faPlus, faListUl } from '@fortawesome/free-solid-svg-icons';
 
 import { getTasks, createTask } from '../lib/fetch';
 
 const styles = {
-  container: {
-  },
+  container: {},
   listTitle: {
     color: '#284257',
     fontSize: '2em',
@@ -26,10 +24,9 @@ const styles = {
   },
   taskInput: {
     fontSize: '1.5em',
-    marginBottom: 20
+    marginBottom: 20,
   },
-  addTaskButton: {
-  },
+  addTaskButton: {},
   addTaskButtonIcon: {
     color: 'white',
     fontSize: '1.8em',
@@ -42,11 +39,9 @@ const styles = {
 };
 
 export default class Tasks extends React.Component {
-  static propTypes = {
-  };
+  static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -87,7 +82,7 @@ export default class Tasks extends React.Component {
     return (
       <div>
         <div style={styles.listTitle}>
-          {"Handlelista"}
+          {'Handlelista'}
           <FontAwesomeIcon icon={faShoppingBasket} style={styles.icon} />
         </div>
         {this.renderTopTasksItems()}
@@ -99,7 +94,14 @@ export default class Tasks extends React.Component {
     return this.state.tasks.map((task, i) => {
       return (
         <div key={task.id}>
-          <div style={styles.taskText}> <span role="img" aria-label="dot"> &#x26AB; </span> {task.title} </div>
+          <div style={styles.taskText}>
+            {' '}
+            <span role="img" aria-label="dot">
+              {' '}
+              &#x26AB;{' '}
+            </span>{' '}
+            {task.title}{' '}
+          </div>
         </div>
       );
     });
@@ -108,40 +110,40 @@ export default class Tasks extends React.Component {
   addNewTask() {
     if (this.state.newItemText.length > 0) {
       createTask(this.state.newItemText)
-      .then(() => {
-        this.setState({ newItemText: '' });
-        toast.success('Tillagd!');
-        this.refreshTasks();
-      })
-      .catch(err => { 
-        this.setState({ newItemText: 'Failed to create task'});
-        toast.error('Misslyckades att lägga till')
-      });
+        .then(() => {
+          this.setState({ newItemText: '' });
+          toast.success('Tillagd!');
+          this.refreshTasks();
+        })
+        .catch(err => {
+          this.setState({ newItemText: 'Failed to create task' });
+          toast.error('Misslyckades att lägga till');
+        });
     }
   }
 
   newTaskNameChange(input) {
     this.setState({
       newItemText: input.target.value,
-    })
+    });
   }
 
   renderAddTask() {
     return (
       <div>
         <div style={styles.listTitle}>
-          {"Lägg till"}
+          {'Lägg till'}
           <FontAwesomeIcon icon={faListUl} style={styles.icon} />
         </div>
         <Form>
           <FormControl
-            bsSize='large'
+            bsSize="large"
             style={styles.taskInput}
             placeholder="Att handla"
             onChange={this.newTaskNameChange}
             value={this.state.newItemText}
             onKeyPress={event => {
-              if (event.key === "Enter") {
+              if (event.key === 'Enter') {
                 this.addNewTask();
                 event.preventDefault();
               }
@@ -152,18 +154,14 @@ export default class Tasks extends React.Component {
           </Button>
         </Form>
       </div>
-      );
+    );
   }
 
   render() {
     return (
       <Row style={styles.container}>
-        <Col md={4}>
-          {this.renderTaskList()}
-        </Col>
-        <Col md={4}>
-          {this.renderAddTask()}
-        </Col>
+        <Col md={4}>{this.renderTaskList()}</Col>
+        <Col md={4}>{this.renderAddTask()}</Col>
       </Row>
     );
   }
