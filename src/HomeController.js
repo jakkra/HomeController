@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb, faPlug, faBars, faShoppingBasket, faThermometerHalf } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
@@ -64,9 +64,6 @@ export default class HomeController extends Component {
       case Tabs.LIGHTS:
         image = faLightbulb;
         break;
-      case Tabs.OUTLETS:
-        image = faPlug;
-        break;
       case Tabs.OTHERS:
         image = faBars;
         break;
@@ -106,9 +103,6 @@ export default class HomeController extends Component {
       case Tabs.TASKS:
         view = <Tasks />;
         break;
-      case Tabs.OUTLETS:
-        view = 'OutletConroller';
-        break;
       case Tabs.TEMPERATURE:
         view = <TemperatureGraph />;
         break;
@@ -128,10 +122,9 @@ export default class HomeController extends Component {
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12}>
             <Row xs={12}>
-              <Col xs={3}>{this.renderButton(Tabs.LIGHTS)}</Col>
-              <Col xs={3}>{this.renderButton(Tabs.TASKS)}</Col>
-              <Col xs={3}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
-              <Col xs={3}>{this.renderButton(Tabs.OUTLETS)}</Col>
+              <Col xs={4}>{this.renderButton(Tabs.LIGHTS)}</Col>
+              <Col xs={4}>{this.renderButton(Tabs.TASKS)}</Col>
+              <Col xs={4}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
             </Row>
           </Col>
         </div>

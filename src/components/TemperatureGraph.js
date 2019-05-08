@@ -78,7 +78,6 @@ export default class TemperatureGraph extends React.Component {
     const prevTemps = this.state.temperatures;
     prevTemps[source] = t;
 
-    console.log('prev', prevTemps);
     this.setState({
       allTemperatures: prevTemps,
       currentSource: temperatureSources[0],

@@ -1,7 +1,6 @@
 const constants = {
   Tabs: {
     LIGHTS: 'lights',
-    OUTLETS: 'outlets',
     TASKS: 'tasks',
     TEMPERATURE: 'temperature',
     OTHERS: 'others',
