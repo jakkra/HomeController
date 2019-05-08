@@ -18,6 +18,7 @@ const styles = {
   },
   brightnessText: {
     marginTop: 14,
+    fontSize: '1.2em',
   },
   brightnessSlider: {
     margin: 15,
@@ -149,10 +150,10 @@ export default class LightController extends Component {
   renderBrightness(light) {
     return (
       <div>
-        <Col xs={2}>
-          <div style={styles.brightnessText}>Brightness:</div>
+        <Col xs={3}>
+          <div style={styles.brightnessText}>Brightness</div>
         </Col>
-        <Col xs={10}>
+        <Col xs={9}>
           <Slider
             style={styles.brightnessSlider}
             min={1}
