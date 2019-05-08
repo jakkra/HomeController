@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { Col, Row } from 'react-bootstrap';
 import { getCurrentWeather } from '../lib/smhi';
+import { toast } from 'react-toastify';
 
 const styles = {
   container: {
@@ -45,12 +46,13 @@ export default class InformationPanel extends React.Component {
 
   componentDidMount() {
     this.timerClockID = setInterval(() => this.tick(), 1000);
-    this.timerClockID = setInterval(() => this.refreshWeather(), 10 * 60 * 1000);
+    this.timerWeatherID = setInterval(() => this.refreshWeather(), 5 * 60 * 1000);
     this.refreshWeather();
   }
 
   componentWillUnmount() {
     clearInterval(this.timerClockID);
+    clearInterval(this.timerWeatherID);
   }
 
   tick() {
@@ -62,7 +64,7 @@ export default class InformationPanel extends React.Component {
   refreshWeather() {
     getCurrentWeather()
       .then(this.handleNewWeather)
-      .catch(err => console.log(err));
+      .catch(err => { console.log(err); toast.show(err) });
   }
 
   handleNewWeather(weather) {
