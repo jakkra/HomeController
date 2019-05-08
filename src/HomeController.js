@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
@@ -73,6 +73,9 @@ export default class HomeController extends Component {
         break;
       case Tabs.TEMPERATURE:
         image = faThermometerHalf;
+        break;
+      case Tabs.PRINTER:
+        image = faPrint;
         break;
       default:
         image = faBars;
