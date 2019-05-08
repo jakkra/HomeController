@@ -13,22 +13,22 @@ const checkStatus = res => {
   });
 };
 
-export function handleLightAction(light, action, options) {
-  switch (light.type) {
+export function handleDeviceAction(device, action, options) {
+  switch (device.type) {
     case DeviceTypes.WLED:
-      return handleWled(light, action, options);
+      return handleWled(device, action, options);
     case DeviceTypes.HUE:
-      return handleHue(light, action, options);
+      return handleHue(device, action, options);
     case DeviceTypes.TASMOTA_OUTLET:
-      return handleSonoffTasmotaOutletAction(light.ip, action);
+      return handleSonoffTasmotaOutletAction(device.ip, action);
     case DeviceTypes.RF_OUTLET:
-      return handleRfOutlet(light.ip, action);
+      return handleRfOutlet(device.ip, action);
     case DeviceTypes.HYPERION:
-      return handleHyperion(light.ip, action);
+      return handleHyperion(device.ip, action);
     case DeviceTypes.TOGGLE:
-      return handleToggle(light.ip, action);
+      return handleToggle(device.ip, action);
     default:
-      return new Promise.reject(new Error(`Light type ${light.type} not implemented/supported`));
+      return new Promise.reject(new Error(`Device type ${device.type} not implemented/supported`));
   }
 }
 
@@ -165,7 +165,7 @@ function handleWled(light, action, params) {
         if (params && params.brightness) {
           url += '/win&A=' + params.brightness;
         } else {
-          return reject(new Error(`Action ${action} requires params with brightness set for hue-light`));
+          return reject(new Error(`Action ${action} requires params with brightness set for wled-light`));
         }
         break;
       case Actions.LIGHT_EFFECT:

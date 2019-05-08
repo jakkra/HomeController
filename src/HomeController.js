@@ -6,7 +6,7 @@ import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf } from '@forta
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
-import LightPage from './components/LightPage';
+import DevicePage from './components/DevicePage';
 import InformationPanel from './components/InformationPanel';
 import Tasks from './components/Tasks';
 import TemperatureGraph from './components/TemperatureGraph';
@@ -98,7 +98,7 @@ export default class HomeController extends Component {
 
     switch (this.state.selectedTab) {
       case Tabs.LIGHTS:
-        view = <LightPage rooms={rooms} />;
+        view = <DevicePage rooms={rooms} />;
         break;
       case Tabs.TASKS:
         view = <Tasks />;

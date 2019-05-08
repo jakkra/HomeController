@@ -9,10 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Actions, DeviceTypes } from '../constants';
-import { handleLightAction } from '../lib/ActionHandler';
+import { handleDeviceAction } from '../lib/ActionHandler';
 
 const styles = {
-  lightTypeText: {
+  deviceTypeText: {
     fontSize: '1.2em',
     color: '#294459',
   },
@@ -29,9 +29,9 @@ const styles = {
   },
 };
 
-export default class LightController extends Component {
+export default class DeviceController extends Component {
   static propTypes = {
-    light: PropTypes.object,
+    device: PropTypes.object,
     group: PropTypes.object,
   };
 
@@ -47,50 +47,50 @@ export default class LightController extends Component {
     this.renderGroupOnOff = this.renderGroupOnOff.bind(this);
   }
 
-  renderControllerDependingOnLight(light) {
-    switch (light.type) {
+  renderControllerDependingOnDevice(device) {
+    switch (device.type) {
       case DeviceTypes.HUE:
-        return this.renderHueLight(light);
+        return this.renderHueDevice(device);
       case DeviceTypes.WLED:
-        return this.renderWledLight(light);
+        return this.renderWledDevice(device);
       case DeviceTypes.TASMOTA_OUTLET:
       case DeviceTypes.RF_OUTLET:
-        return this.renderOnOff(light);
+        return this.renderOnOff(device);
       case DeviceTypes.HYPERION:
-        return this.renderOnOff(light);
+        return this.renderOnOff(device);
       case DeviceTypes.TOGGLE:
-        return this.renderToggle(light);
+        return this.renderToggle(device);
       default:
-        return <div>Not Implemented: {light.type}</div>;
+        return <div>Not Implemented: {device.type}</div>;
     }
   }
 
-  renderHueLight(light) {
+  renderHueDevice(device) {
     return (
       <div>
-        {this.renderOnOff(light)}
-        {this.renderBrightness(light)}
+        {this.renderOnOff(device)}
+        {this.renderBrightness(device)}
       </div>
     );
   }
 
-  renderWledLight(light) {
+  renderWledDevice(device) {
     return (
       <div>
-        {this.renderOnOff(light)}
-        {this.renderBrightness(light)}
+        {this.renderOnOff(device)}
+        {this.renderBrightness(device)}
         <Row>
-          {this.renderEffectsDropdown(light)}
-          {this.renderWledWebpageButton(light)}
+          {this.renderEffectsDropdown(device)}
+          {this.renderWledWebpageButton(device)}
         </Row>
       </div>
     );
   }
 
-  renderWledWebpageButton(light) {
+  renderWledWebpageButton(device) {
     return (
-      <Button href={light.ip} bsStyle="link">
-        <FontAwesomeIcon href={light.ip} icon={faExternalLinkAlt} style={styles.wledUrlIcon} />
+      <Button href={device.ip} bsStyle="link">
+        <FontAwesomeIcon href={device.ip} icon={faExternalLinkAlt} style={styles.wledUrlIcon} />
       </Button>
     );
   }
@@ -102,13 +102,13 @@ export default class LightController extends Component {
           <Button
             href="#"
             bsStyle="success"
-            onClick={() => group.lights.forEach(light => this.handleControllerActionOnOff(light, true))}>
+            onClick={() => group.devices.forEach(device => this.handleControllerActionOnOff(device, true))}>
             ON
           </Button>
           <Button
             href="#"
             bsStyle="danger"
-            onClick={() => group.lights.forEach(light => this.handleControllerActionOnOff(light, false))}>
+            onClick={() => group.devices.forEach(device => this.handleControllerActionOnOff(device, false))}>
             OFF
           </Button>
         </ButtonGroup>
@@ -116,14 +116,14 @@ export default class LightController extends Component {
     );
   }
 
-  renderOnOff(light) {
+  renderOnOff(device) {
     return (
       <div>
         <ButtonGroup justified>
-          <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionOnOff(light, true)}>
+          <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionOnOff(device, true)}>
             ON
           </Button>
-          <Button href="#" bsStyle="danger" onClick={() => this.handleControllerActionOnOff(light, false)}>
+          <Button href="#" bsStyle="danger" onClick={() => this.handleControllerActionOnOff(device, false)}>
             OFF
           </Button>
         </ButtonGroup>
@@ -131,11 +131,11 @@ export default class LightController extends Component {
     );
   }
 
-  renderToggle(light) {
+  renderToggle(device) {
     return (
       <div>
         <ButtonGroup justified>
-          <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionToggle(light)}>
+          <Button href="#" bsStyle="success" onClick={() => this.handleControllerActionToggle(device)}>
             TOGGLE
           </Button>
         </ButtonGroup>
@@ -147,7 +147,7 @@ export default class LightController extends Component {
     this.setState({ hueBrightness: value });
   }
 
-  renderBrightness(light) {
+  renderBrightness(device) {
     return (
       <div>
         <Col xs={3}>
@@ -168,19 +168,19 @@ export default class LightController extends Component {
             trackStyle={{ height: 10 }}
             value={this.state.hueBrightness}
             onChange={this.onBrightnessChange}
-            onAfterChange={() => this.handleControllerActionBrightness(light, this.state.hueBrightness)}
+            onAfterChange={() => this.handleControllerActionBrightness(device, this.state.hueBrightness)}
           />
         </Col>
       </div>
     );
   }
 
-  renderEffectsDropdown(light) {
+  renderEffectsDropdown(device) {
     return (
       <DropdownButton bsStyle="primary" title={'Select effect'} id="effectDropdown">
         {colorEffects.map((effect, index) => (
           <MenuItem
-            onSelect={id => this.handleControllerActionEffect(light, id)}
+            onSelect={id => this.handleControllerActionEffect(device, id)}
             id={`dropdown-basic-${index}`}
             key={effect}
             eventKey={index}>
@@ -191,47 +191,45 @@ export default class LightController extends Component {
     );
   }
 
-  handleControllerActionOnOff(light, isOn) {
-    handleLightAction(light, isOn ? Actions.ON : Actions.OFF)
+  handleControllerActionOnOff(device, isOn) {
+    handleDeviceAction(device, isOn ? Actions.ON : Actions.OFF)
       .then(console.log('Success'))
       .catch(err => console.log('Should display error to user', err));
   }
 
-  handleControllerActionToggle(light) {
-    handleLightAction(light, Actions.TOGGLE)
+  handleControllerActionToggle(device) {
+    handleDeviceAction(device, Actions.TOGGLE)
       .then(console.log('Success'))
       .catch(err => console.log('Should display error to user', err));
   }
 
-  handleControllerActionBrightness(light, brightness) {
-    console.log(brightness);
-    handleLightAction(light, Actions.BRIGHTNESS, { brightness: brightness })
+  handleControllerActionBrightness(device, brightness) {
+    handleDeviceAction(device, Actions.BRIGHTNESS, { brightness: brightness })
       .then(console.log('Success'))
       .catch(err => console.log('Should display error to user', err));
   }
 
-  handleControllerActionEffect(light, id) {
-    console.log(id, light);
-    handleLightAction(light, Actions.LIGHT_EFFECT, { effect: id })
+  handleControllerActionEffect(device, id) {
+    handleDeviceAction(device, Actions.LIGHT_EFFECT, { effect: id })
       .then(console.log('Success'))
       .catch(err => console.log('Should display error to user', err));
   }
 
   render() {
-    if (!this.props.light && !this.props.group) return null;
+    if (!this.props.device && !this.props.group) return null;
     let controller = null;
     let description = null;
 
-    if (this.props.light) {
-      description = this.props.light.name;
-      controller = this.renderControllerDependingOnLight(this.props.light);
+    if (this.props.device) {
+      description = this.props.device.name;
+      controller = this.renderControllerDependingOnDevice(this.props.device);
     } else if (this.props.group) {
       description = this.props.group.groupName;
       controller = this.renderGroupOnOff(this.props.group);
     }
     return (
       <div>
-        <div style={styles.lightTypeText}>{description}</div>
+        <div style={styles.deviceTypeText}>{description}</div>
         {controller}
       </div>
     );

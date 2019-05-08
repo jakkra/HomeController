@@ -5,40 +5,40 @@ import { Row, Button, ButtonGroup } from 'react-bootstrap';
 import { DeviceTypes } from '../constants';
 
 const styles = {
-  lightButton: {
+  deviceButton: {
     margin: 4,
   },
 };
 
-export default class LightSelector extends Component {
+export default class DeviceSelector extends Component {
   static propTypes = {
-    onLightSelected: PropTypes.func,
+    onDeviceSelected: PropTypes.func,
     onGroupSelected: PropTypes.func,
-    lightGroups: PropTypes.array,
+    deviceGroups: PropTypes.array,
   };
 
   constructor() {
     super();
 
     this.state = {
-      selectedlight: null,
+      selecteddevice: null,
     };
 
-    this.onLightClicked = this.onLightClicked.bind(this);
+    this.onDeviceClicked = this.onDeviceClicked.bind(this);
     this.renderAllbutton = this.renderAllbutton.bind(this);
   }
 
-  onLightClicked(light) {
+  onDeviceClicked(device) {
     this.setState({
-      selectedlight: light,
+      selecteddevice: device,
     });
-    this.props.onLightSelected(light);
+    this.props.onDeviceSelected(device);
   }
 
-  renderLightButton(light) {
+  renderDeviceButton(device) {
     let bsStyle = 'primary';
 
-    switch (light.type) {
+    switch (device.type) {
       case DeviceTypes.HUE:
         bsStyle = 'info';
         break;
@@ -58,22 +58,22 @@ export default class LightSelector extends Component {
 
     return (
       <Button
-        key={light.id}
-        style={styles.lightButton}
+        key={device.id}
+        style={styles.deviceButton}
         href="#"
         bsStyle={bsStyle}
-        onClick={() => this.onLightClicked(light)}>
-        {light.name}
+        onClick={() => this.onDeviceClicked(device)}>
+        {device.name}
       </Button>
     );
   }
 
   renderAllbutton(group) {
-    if (group.lights.length > 1) {
+    if (group.devices.length > 1) {
       return (
         <Button
           key={group.name}
-          style={styles.lightButton}
+          style={styles.deviceButton}
           href="#"
           bsStyle="warning"
           onClick={() => this.props.onGroupSelected(group)}>
@@ -86,16 +86,16 @@ export default class LightSelector extends Component {
   }
 
   render() {
-    if (!this.props.lightGroups || this.props.lightGroups.length === 0) return null;
+    if (!this.props.deviceGroups || this.props.deviceGroups.length === 0) return null;
     return (
       <div>
-        {this.props.lightGroups.map(group => {
+        {this.props.deviceGroups.map(group => {
           return (
             <ButtonGroup key={group.groupName} justified>
               {group.groupName}
               <Row md={4}>
                 {this.renderAllbutton(group)}
-                {group.lights.map(light => this.renderLightButton(light))}
+                {group.devices.map(device => this.renderDeviceButton(device))}
               </Row>
             </ButtonGroup>
           );

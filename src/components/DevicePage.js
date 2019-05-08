@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Col, Row, Collapse } from 'react-bootstrap';
 import { isMobile, isTablet } from 'react-device-detect';
 
-import LightSelector from './LightSelector';
-import LightController from './LightController';
+import DeviceSelector from './DeviceSelector';
+import DeviceController from './DeviceController';
 import RoomSelector from './RoomSelector';
 
 const styles = {
@@ -15,7 +15,7 @@ const styles = {
   },
 };
 
-export default class LightPage extends Component {
+export default class DevicePage extends Component {
   static propTypes = {
     rooms: PropTypes.array,
   };
@@ -24,12 +24,12 @@ export default class LightPage extends Component {
     super();
 
     this.state = {
-      selectedLight: null,
+      selectedDevice: null,
       selectedGroup: null,
       selectedRoom: null,
     };
 
-    this.onLightSelected = this.onLightSelected.bind(this);
+    this.onDeviceSelected = this.onDeviceSelected.bind(this);
     this.onGroupSelected = this.onGroupSelected.bind(this);
     this.onRoomSelected = this.onRoomSelected.bind(this);
     this.renderRoomTitle = this.renderRoomTitle.bind(this);
@@ -38,7 +38,7 @@ export default class LightPage extends Component {
   componentDidMount() {
     if (this.props.rooms && this.props.rooms[0] && this.props.rooms[0].groups && this.props.rooms[0].groups[0]) {
       this.setState({
-        selectedLight: this.props.rooms[0].groups[0].lights[0],
+        selectedDevice: this.props.rooms[0].groups[0].devices[0],
         selectedRoom: this.props && this.props.rooms ? this.props.rooms[0] : null,
       });
     }
@@ -52,26 +52,26 @@ export default class LightPage extends Component {
     );
   }
 
-  onLightSelected(light) {
-    this.setState({ selectedLight: light, selectedGroup: null });
+  onDeviceSelected(device) {
+    this.setState({ selectedDevice: device, selectedGroup: null });
   }
 
   onGroupSelected(group) {
     console.log(group);
-    this.setState({ selectedLight: null, selectedGroup: group });
+    this.setState({ selectedDevice: null, selectedGroup: group });
   }
 
   onRoomSelected(roomName) {
     const room = this.props.rooms.find(room => room.name === roomName);
-    let newLight = this.state.selectedLight;
+    let newDevice = this.state.selectedDevice;
 
-    if (room && room.groups[0] && room.groups[0].lights[0]) {
-      newLight = room.groups[0].lights[0];
+    if (room && room.groups[0] && room.groups[0].devices[0]) {
+      newDevice = room.groups[0].devices[0];
     }
     if (room) {
       this.setState({
         selectedRoom: room,
-        selectedLight: newLight,
+        selectedDevice: newDevice,
       });
     }
   }
@@ -82,9 +82,9 @@ export default class LightPage extends Component {
         {this.renderRoomTitle(room.name)}
         <Collapse in={this.state.selectedRoom.name === room.name}>
           <div>
-            <LightSelector
-              lightGroups={room.groups}
-              onLightSelected={this.onLightSelected}
+            <DeviceSelector
+              deviceGroups={room.groups}
+              onDeviceSelected={this.onDeviceSelected}
               onGroupSelected={this.onGroupSelected}
             />
           </div>
@@ -115,7 +115,7 @@ export default class LightPage extends Component {
         <Col md={4}>
           <Row>{this.renderRoomTitle('Controller')}</Row>
           <Row>
-            <LightController light={this.state.selectedLight} group={this.state.selectedGroup} />
+            <DeviceController device={this.state.selectedDevice} group={this.state.selectedGroup} />
           </Row>
         </Col>
         {view}

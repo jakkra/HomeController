@@ -15,7 +15,7 @@ export const rooms = [
     groups: [
       {
         groupName: 'HUE',
-        lights: [
+        devices: [
           {
             name: 'Trappa-Spot',
             id: 8,
@@ -38,7 +38,7 @@ export const rooms = [
       },
       {
         groupName: 'OTHER',
-        lights: [
+        devices: [
           {
             name: 'Hörnlampa',
             id: 7,
@@ -78,7 +78,7 @@ export const rooms = [
     groups: [
       {
         groupName: 'WLED',
-        lights: [
+        devices: [
           {
             name: 'Slinga',
             id: 2,
@@ -89,7 +89,7 @@ export const rooms = [
       },
       {
         groupName: 'OTHER',
-        lights: [
+        devices: [
           {
             name: 'Kattskål',
             id: 2,
@@ -112,7 +112,7 @@ export const rooms = [
     groups: [
       {
         groupName: 'HUE',
-        lights: [
+        devices: [
           {
             name: 'Taklampa',
             id: 5,
@@ -135,7 +135,7 @@ export const rooms = [
       },
       {
         groupName: 'OTHER',
-        lights: [
+        devices: [
           {
             name: 'Ljusslinga',
             id: 6,
@@ -151,7 +151,7 @@ export const rooms = [
     groups: [
       {
         groupName: 'WLED',
-        lights: [
+        devices: [
           {
             name: 'Falcon',
             id: 1,
@@ -174,7 +174,7 @@ export const rooms = [
       },
       {
         groupName: 'HUE',
-        lights: [
+        devices: [
           {
             name: 'Spot Skrivbord',
             id: 13,
@@ -202,7 +202,7 @@ export const rooms = [
     groups: [
       {
         groupName: 'HUE',
-        lights: [
+        devices: [
           {
             name: 'Spot fotölj',
             id: 71,
@@ -219,7 +219,7 @@ export const rooms = [
       },
       {
         groupName: 'OTHER',
-        lights: [
+        devices: [
           {
             name: 'Bordslampa',
             id: 6,
