@@ -1,4 +1,4 @@
-import { mirrorUrl } from '../config';
+import { mirrorUrl, octoiApiKey } from '../config';
 
 const checkStatus = res => {
   return new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ export function getCurrentPlaying(callback) {
     .then(res => res.currentPlaying);
 }
 
-/*
+
 export function get3DPrinterState(callback) {
   const url = 'http://octopi.local/api/printer';
   const urlJob = 'http://octopi.local/api/job';
@@ -91,7 +91,7 @@ export function get3DPrinterState(callback) {
   var options = {
     method: "GET",
     headers: {
-      'X-Api-Key': config.octoiApiKey,
+      'X-Api-Key': octoiApiKey,
     },
   };
 
@@ -112,4 +112,4 @@ export function get3DPrinterState(callback) {
       }
     });
 }
-*/
+

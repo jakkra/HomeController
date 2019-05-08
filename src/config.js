@@ -9,6 +9,8 @@ export const smhiCoord = {
 
 export const temperatureSources = [{ key: 'outside', name: 'vardagsrum' }, { key: 'inside', name: 'lekrum' }];
 
+export const octoiApiKey = '8D3D293D2413424582B79BDE1FD108A8';
+
 export const rooms = [
   {
     name: 'Vardagsrum',

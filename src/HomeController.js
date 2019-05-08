@@ -10,6 +10,7 @@ import DevicePage from './components/DevicePage';
 import InformationPanel from './components/InformationPanel';
 import Tasks from './components/Tasks';
 import TemperatureGraph from './components/TemperatureGraph';
+import OctoPrint from './components/OctoPrint';
 import { Tabs } from './constants';
 import { rooms } from './config';
 
@@ -106,6 +107,9 @@ export default class HomeController extends Component {
       case Tabs.TEMPERATURE:
         view = <TemperatureGraph />;
         break;
+      case Tabs.PRINTER:
+        view = <OctoPrint />
+        break;
       default:
         break;
     }
@@ -122,9 +126,10 @@ export default class HomeController extends Component {
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12}>
             <Row xs={12}>
-              <Col xs={4}>{this.renderButton(Tabs.LIGHTS)}</Col>
-              <Col xs={4}>{this.renderButton(Tabs.TASKS)}</Col>
-              <Col xs={4}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
+              <Col xs={3}>{this.renderButton(Tabs.LIGHTS)}</Col>
+              <Col xs={3}>{this.renderButton(Tabs.TASKS)}</Col>
+              <Col xs={3}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
+              <Col xs={3}>{this.renderButton(Tabs.PRINTER)}</Col>
             </Row>
           </Col>
         </div>
