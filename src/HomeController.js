@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf, faPrint, faTint } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
@@ -10,6 +10,7 @@ import DevicePage from './components/DevicePage';
 import InformationPanel from './components/InformationPanel';
 import Tasks from './components/Tasks';
 import TemperatureGraph from './components/TemperatureGraph';
+import MoistureGraph from './components/MoistureGraph';
 import OctoPrint from './components/OctoPrint';
 import { Tabs } from './constants';
 import { rooms } from './config';
@@ -77,6 +78,9 @@ export default class HomeController extends Component {
       case Tabs.PRINTER:
         image = faPrint;
         break;
+      case Tabs.MOISTURE:
+        image = faTint;
+        break;
       default:
         image = faBars;
         break;
@@ -113,6 +117,9 @@ export default class HomeController extends Component {
       case Tabs.PRINTER:
         view = <OctoPrint />
         break;
+      case Tabs.MOISTURE:
+        view = <MoistureGraph />
+        break;
       default:
         break;
     }
@@ -129,10 +136,12 @@ export default class HomeController extends Component {
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12}>
             <Row xs={12}>
-              <Col xs={3}>{this.renderButton(Tabs.LIGHTS)}</Col>
-              <Col xs={3}>{this.renderButton(Tabs.TASKS)}</Col>
-              <Col xs={3}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
-              <Col xs={3}>{this.renderButton(Tabs.PRINTER)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.LIGHTS)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.TASKS)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.MOISTURE)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.PRINTER)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.UNKNOWN)}</Col>
             </Row>
           </Col>
         </div>

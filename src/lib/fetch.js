@@ -74,6 +74,15 @@ export function getTemperaturesSevenDays(source, callback) {
     .then(res => res.temperatures);
 }
 
+export function getMoistureSevenDays(callback) {
+  const url = mirrorUrl + '/api/moisture';
+
+  return fetch(url)
+    .then(checkStatus)
+    .then(res => res.json())
+    .then(res => res.moisture);
+}
+
 export function getCurrentPlaying(callback) {
   const url = mirrorUrl + '/api/spotify/current';
 
