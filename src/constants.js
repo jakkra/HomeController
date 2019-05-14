@@ -5,7 +5,7 @@ const constants = {
     TEMPERATURE: 'temperature',
     OTHERS: 'others',
     PRINTER: 'printer',
-    MOISTURE: 'moisture',
+    GARDEN: 'garden',
   },
   Actions: {
     ON: 'ON',

@@ -10,7 +10,7 @@ import DevicePage from './components/DevicePage';
 import InformationPanel from './components/InformationPanel';
 import Tasks from './components/Tasks';
 import TemperatureGraph from './components/TemperatureGraph';
-import MoistureGraph from './components/MoistureGraph';
+import GardenGraph from './components/GardenGraph';
 import OctoPrint from './components/OctoPrint';
 import { Tabs } from './constants';
 import { rooms } from './config';
@@ -78,7 +78,7 @@ export default class HomeController extends Component {
       case Tabs.PRINTER:
         image = faPrint;
         break;
-      case Tabs.MOISTURE:
+      case Tabs.GARDEN:
         image = faTint;
         break;
       default:
@@ -117,8 +117,8 @@ export default class HomeController extends Component {
       case Tabs.PRINTER:
         view = <OctoPrint />
         break;
-      case Tabs.MOISTURE:
-        view = <MoistureGraph />
+      case Tabs.GARDEN:
+        view = <GardenGraph />
         break;
       default:
         break;
@@ -132,14 +132,14 @@ export default class HomeController extends Component {
       <Col style={styles.container}>
         <ToastContainer autoClose={3000} position="bottom-center" closeOnClick />
         <div style={{ paddingBottom: 50 }}>{this.renderTabView()}</div>
-        <Row>{!(isMobile && !isTablet) ? <InformationPanel /> : null}</Row>
+        <Row>{!((isMobile && !isTablet) || (this.state.selectedTab === Tabs.GARDEN)) ? <InformationPanel /> : null}</Row>
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12}>
             <Row xs={12}>
               <Col xs={2}>{this.renderButton(Tabs.LIGHTS)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.TASKS)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.MOISTURE)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.GARDEN)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.PRINTER)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.UNKNOWN)}</Col>
             </Row>
