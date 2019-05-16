@@ -7,7 +7,7 @@ export const smhiCoord = {
   latitude: 55.61,
 };
 
-export const temperatureSources = [{ key: 'outside', name: 'vardagsrum' }, { key: 'inside', name: 'lekrum' }];
+export const temperatureSources = [{ key: '4', name: 'vardagsrum' }, { key: 'inside', name: 'lekrum' }];
 
 export const gardenSources = [{ key: '2', name: 'Pallkrage 1' }, { key: '3', name: 'Pallkrage 2' }];
 
