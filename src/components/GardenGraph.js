@@ -73,6 +73,7 @@ export default class GardenGraph extends React.Component {
     // Combine mositure and temperature data to one object, with the name/id as key
     Object.keys(data)
       .forEach(key => result[key] = {
+        name: gardenSources.find(element => element.key === key).name,
         temperatures: temperatures[key] ? temperatures[key].temperatures : [] , moistures: moistures[key] ? moistures[key].moistures : []
       });
 
@@ -128,7 +129,7 @@ export default class GardenGraph extends React.Component {
         {Object.keys(this.state.data).map((key, i) =>
           <div key={i}>
             <Col xs={6}>
-              <div style={styles.chartTitle} >{"Fuktighet " + key}</div>
+              <div style={styles.chartTitle} >{"Fuktighet " + this.state.data[key].name}</div>
                 <ResponsiveContainer title="A title" width="90%" aspect={2.5}>
                   <AreaChart title="A title" data={this.state.data[key].moistures}>
                     <XAxis
@@ -144,7 +145,7 @@ export default class GardenGraph extends React.Component {
                 </ResponsiveContainer>
               </Col>
               <Col xs={6}>
-              <div style={styles.chartTitle} >{"Temperature " + key}</div>
+              <div style={styles.chartTitle} >{"Temperature Jord " + this.state.data[key].name}</div>
                 <ResponsiveContainer title="A title" width="90%" aspect={2.5}>
                   <AreaChart title="A title" data={this.state.data[key].temperatures}>
                     <XAxis
