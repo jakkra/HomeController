@@ -98,7 +98,7 @@ export const rooms = [
             name: 'Kattskål',
             id: 2,
             type: DeviceTypes.TOGGLE,
-            ip: 'http://192.168.1.27/feed',
+            ip: 'http://192.168.1.26/feed',
           },
         ],
       },
