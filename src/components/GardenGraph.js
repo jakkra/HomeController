@@ -62,6 +62,24 @@ export default class GardenGraph extends React.Component {
     Promise.all(actions).then(() => this.handleNewData(temps, moistures));
   }
 
+  convertMoisturesToPercent(moistures) {
+    const minMoisture = Math.min(...moistures.map(o => o.moisture), 9999);
+    const maxMoisture = Math.max(...moistures.map(o => o.moisture), 0);
+
+    if (moistures && moistures.length > 1) {
+      return moistures.map(m => {
+        const numerator = m.moisture - minMoisture;
+        const denominator = maxMoisture - minMoisture;
+        if (denominator !== 0) {
+          m.moisture = Math.round(100 * (numerator / denominator))
+        }
+        return m;
+      });
+    }
+
+    return moistures;
+  }
+
   handleNewData(temperatures, moistures) {
     // Combine all keys
     const data = {
@@ -74,10 +92,10 @@ export default class GardenGraph extends React.Component {
     Object.keys(data)
       .forEach(key => result[key] = {
         name: gardenSources.find(element => element.key === key).name,
-        temperatures: temperatures[key] ? temperatures[key].temperatures : [] , moistures: moistures[key] ? moistures[key].moistures : []
+        temperatures: temperatures[key] ? temperatures[key].temperatures : [],
+        moistures: moistures[key] ? this.convertMoisturesToPercent(moistures[key].moistures) : [],
       });
 
-    console.log(result);
     this.setState({
       data: result
     });
@@ -89,7 +107,7 @@ export default class GardenGraph extends React.Component {
       if (!logs.find(element => element.name === moisture.name) && gardenSources.find(element => element.key === moisture.name)) {
         logs.push({
           name: moisture.name,
-          moistures: moistures.filter(log => log.name === moisture.name)
+          moistures: moistures.filter(log => log.name === moisture.name),
         });
       }
     });
@@ -137,7 +155,7 @@ export default class GardenGraph extends React.Component {
                       tickFormatter={this.formatX}
                       dataKey="createdAt"
                     />
-                    <YAxis type="number" domain={['dataMin - 1']} tickFormatter={this.formatY} />
+                    <YAxis type="number" domain={['dataMin']} tickFormatter={this.formatY} />
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                     <Area name="Fuktighet" type="monotone" dataKey="moisture" stroke="#FFA500" fill={graphColors[i % graphColors.length]} />
                     <Tooltip />

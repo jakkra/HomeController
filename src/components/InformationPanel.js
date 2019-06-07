@@ -10,7 +10,7 @@ const styles = {
     textAlign: 'left',
     position: 'absolute',
     bottom: 60,
-    paddingLeft: 10,
+    paddingLeft: 30,
   },
   clock: {
     color: '#284257',

@@ -17,7 +17,7 @@ import { rooms } from './config';
 
 const styles = {
   container: {
-    padding: 25,
+    padding: 5,
   },
   toolbar: {
     position: 'fixed',
