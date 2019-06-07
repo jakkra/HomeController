@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { Col, Row } from 'react-bootstrap';
 import { getCurrentWeather } from '../lib/smhi';
+import { getLatestTemperatureFromSource } from '../lib/fetch';
 import { toast } from 'react-toastify';
 
 const styles = {
@@ -65,6 +66,14 @@ export default class InformationPanel extends React.Component {
     getCurrentWeather()
       .then(this.handleNewWeather)
       .catch(err => { console.log(err); toast.show(err) });
+
+    getLatestTemperatureFromSource('4')
+      .then(temperature => {
+        this.setState({
+          temperature: temperature.temperature
+        })
+      })
+      .catch(err => { console.log(err); });
   }
 
   handleNewWeather(weather) {
@@ -79,7 +88,7 @@ export default class InformationPanel extends React.Component {
         <div>
           <Col xs={12} />
           <p style={styles.smallText}>
-            {`${this.state.weather.temp} °C (Känns som ${this.state.weather.windChill} °C)`}
+            {`${this.state.temperature} °C / ${this.state.weather.temp} °C (Känns som ${this.state.weather.windChill} °C)`}
           </p>
           <Col />
         </div>

@@ -73,6 +73,14 @@ export function getTemperaturesSevenDays(source, callback) {
     .then(res => res.temperatures);
 }
 
+export function getLatestTemperatureFromSource(source, callback) {
+  const url = mirrorUrl + '/api/temperature/latest/' + source;
+  return fetch(url)
+    .then(checkStatus)
+    .then(res => res.json())
+    .then(res => (res.temperature.length > 0 ? res.temperature[0] : null));
+}
+
 export function getMoistureSevenDays(callback) {
   const url = mirrorUrl + '/api/moisture';
 
