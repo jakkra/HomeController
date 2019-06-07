@@ -71,7 +71,7 @@ export default class GardenGraph extends React.Component {
         const numerator = m.moisture - minMoisture;
         const denominator = maxMoisture - minMoisture;
         if (denominator !== 0) {
-          m.moisture = Math.round(100 * (numerator / denominator))
+          m.moisturePercent = Math.round(100 * (numerator / denominator));
         }
         return m;
       });
@@ -157,8 +157,11 @@ export default class GardenGraph extends React.Component {
                     />
                     <YAxis type="number" domain={['dataMin']} tickFormatter={this.formatY} />
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                    <Area name="Fuktighet" type="monotone" dataKey="moisture" stroke="#FFA500" fill={graphColors[i % graphColors.length]} />
-                    <Tooltip />
+                    <Area name="Fuktighet" type="monotone" dataKey="moisturePercent" stroke="#FFA500" fill={graphColors[i % graphColors.length]} />
+                    <Tooltip
+                      formatter={function(value, name, data) {
+                        return `${value}% (${data.payload.moisture})`
+                      }} />
                   </AreaChart>
                 </ResponsiveContainer>
               </Col>
