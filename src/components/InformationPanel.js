@@ -101,14 +101,15 @@ export default class InformationPanel extends React.Component {
   }
 
   handleNewWeather(weather) {
-    if (this.isFirstLoad !== true) {
-      toast.success("Updated!", {
+    if (this.isFirstLoad !== true && !toast.isActive(this.toastId)) {
+      this.toastId = toast.success("Updated!", {
         position: "bottom-center",
         autoClose: 1500,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: false,
-        draggable: false,
+        draggable: true,
+        closeButton: false,
       });
     } else {
       this.isFirstLoad = false;
@@ -140,7 +141,7 @@ export default class InformationPanel extends React.Component {
     day = day.charAt(0).toUpperCase() + day.slice(1);
 
     return (
-      <div style={styles.container}>
+      <div style={styles.container} onClick={() => this.refreshWeather()}>
         <Row>
           <Col xs={12} />
           <div style={styles.smallText}> {day}</div>
