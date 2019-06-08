@@ -54,13 +54,14 @@ export default class InformationPanel extends React.Component {
       temperature: 22,
       weather: null,
     };
-
+    this.isFirstLoad = true;
     this.refreshWeather = this.refreshWeather.bind(this);
     this.handleNewWeather = this.handleNewWeather.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
   }
 
   componentDidMount() {
+    this.isFirstLoad = true;
     document.addEventListener(visibilityChange, this.handleVisibilityChange, false);
     this.timerClockID = setInterval(() => this.tick(), 1000);
     this.timerWeatherID = setInterval(() => this.refreshWeather(), 5 * 60 * 1000);
@@ -100,14 +101,18 @@ export default class InformationPanel extends React.Component {
   }
 
   handleNewWeather(weather) {
-    toast.success("Updated!", {
-      position: "bottom-center",
-      autoClose: 1500,
-      hideProgressBar: true,
-      closeOnClick: false,
-      pauseOnHover: false,
-      draggable: false,
-    });
+    if (this.isFirstLoad !== true) {
+      toast.success("Updated!", {
+        position: "bottom-center",
+        autoClose: 1500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+      });
+    } else {
+      this.isFirstLoad = false;
+    }
 
     this.setState({
       weather: weather,
