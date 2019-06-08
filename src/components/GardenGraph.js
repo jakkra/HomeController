@@ -28,7 +28,6 @@ export default class GardenGraph extends React.Component {
     this.state = {
       data: {}
     };
-    this.days = [];
     this.handleNewData = this.handleNewData.bind(this);
     this.refreshData = this.refreshData.bind(this);
     this.formatX = this.formatX.bind(this);
@@ -123,12 +122,7 @@ export default class GardenGraph extends React.Component {
   }
 
   formatX(x) {
-    /*if (this.days.indexOf(moment(new Date(x)).format('dddd')) > -1) {
-      return '';
-    } else {*/
-      this.days.push(moment(new Date(x)).format('dddd'));
       return moment(new Date(x)).format('dddd');
-    /*}*/
   }
 
   formatY(y) {

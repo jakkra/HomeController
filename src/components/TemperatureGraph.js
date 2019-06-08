@@ -45,7 +45,6 @@ export default class TemperatureGraph extends React.Component {
     this.state = {
       temperatures: {},
     };
-    this.days = [];
     this.handleNewTemp = this.handleNewTemp.bind(this);
     this.handleSourceChange = this.handleSourceChange.bind(this);
     this.refreshTemps = this.refreshTemps.bind(this);
@@ -85,12 +84,7 @@ export default class TemperatureGraph extends React.Component {
   }
 
   formatX(x) {
-    if (this.days.indexOf(moment(new Date(x)).format('dddd')) > -1) {
-      return '';
-    } else {
-      this.days.push(moment(new Date(x)).format('dddd'));
       return moment(new Date(x)).format('dddd');
-    }
   }
 
   formatY(y) {
@@ -98,7 +92,6 @@ export default class TemperatureGraph extends React.Component {
   }
 
   handleSourceChange(newIndex) {
-    this.days = [];
     this.setState({
       currentSource: temperatureSources[newIndex % temperatureSources.length],
     });
@@ -137,7 +130,7 @@ export default class TemperatureGraph extends React.Component {
               />
               <YAxis type="number" domain={['dataMin - 1']} tickFormatter={this.formatY} />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <Area name="Temperatur" type="monotone" dataKey="temperature" stroke="#FFA500" fill="#8884d8" />
+              <Area name="Temperatur" type="monotone" dataKey="temperature" stroke="#FFA500" fill="#00ffff" />
               <Tooltip />
             </AreaChart>
           </ResponsiveContainer>
