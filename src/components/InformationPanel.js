@@ -32,6 +32,20 @@ const styles = {
   },
 };
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+let hidden = null;
+let visibilityChange = null;
+if (typeof document.hidden !== 'undefined') {
+  hidden = 'hidden';
+  visibilityChange = 'visibilitychange';
+} else if (typeof document.msHidden !== 'undefined') {
+  hidden = 'msHidden';
+  visibilityChange = 'msvisibilitychange';
+} else if (typeof document.webkitHidden !== 'undefined') {
+  hidden = 'webkitHidden';
+  visibilityChange = 'webkitvisibilitychange';
+}
+
 export default class InformationPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -43,17 +57,26 @@ export default class InformationPanel extends React.Component {
 
     this.refreshWeather = this.refreshWeather.bind(this);
     this.handleNewWeather = this.handleNewWeather.bind(this);
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
   }
 
   componentDidMount() {
+    document.addEventListener(visibilityChange, this.handleVisibilityChange, false);
     this.timerClockID = setInterval(() => this.tick(), 1000);
     this.timerWeatherID = setInterval(() => this.refreshWeather(), 5 * 60 * 1000);
     this.refreshWeather();
   }
 
   componentWillUnmount() {
+    document.removeEventListener(visibilityChange, this.handleVisibilityChange);
     clearInterval(this.timerClockID);
     clearInterval(this.timerWeatherID);
+  }
+
+  handleVisibilityChange() {
+    if (!document[hidden]) {
+     this.refreshWeather();
+    }
   }
 
   tick() {
@@ -65,7 +88,7 @@ export default class InformationPanel extends React.Component {
   refreshWeather() {
     getCurrentWeather()
       .then(this.handleNewWeather)
-      .catch(err => { console.log(err); toast.show(err) });
+      .catch(err => { console.log(err); toast.error(err) });
 
     getLatestTemperatureFromSource('4')
       .then(temperature => {
@@ -77,6 +100,15 @@ export default class InformationPanel extends React.Component {
   }
 
   handleNewWeather(weather) {
+    toast.success("Updated!", {
+      position: "bottom-center",
+      autoClose: 1500,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+    });
+
     this.setState({
       weather: weather,
     });
