@@ -3,6 +3,8 @@ import moment from 'moment';
 
 import { Col, Row } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { gardenSources } from '../config';
 
@@ -16,6 +18,15 @@ const styles = {
     height: '100%',
     width: '100%',
   },
+  loadingIconContainer: {
+    display: 'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    height: '100vh',
+  },
+  loadingIcon: {
+    fontSize: '4em',
+  }
 };
 
 export default class GardenGraph extends React.Component {
@@ -121,6 +132,14 @@ export default class GardenGraph extends React.Component {
     return data;
   }
 
+  renderDataLoading() {
+    return (
+      <div style={styles.loadingIconContainer}>
+        <FontAwesomeIcon icon={faSpinner} style={styles.loadingIcon} spin/>
+      </div>
+      );
+  }
+
   formatX(x) {
       return moment(new Date(x)).format('dddd');
   }
@@ -134,7 +153,7 @@ export default class GardenGraph extends React.Component {
   }
 
   render() {
-    if (Object.keys(this.state.data).length === 0) return null;
+    if (Object.keys(this.state.data).length === 0) return this.renderDataLoading();
     const graphColors= ["#8884d8", "#00ff80", "#00ffff", "#ff0080"]
     return (
       <Row >
