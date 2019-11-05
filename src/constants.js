@@ -6,6 +6,7 @@ const constants = {
     OTHERS: 'others',
     PRINTER: 'printer',
     GARDEN: 'garden',
+    CONFIG: 'CONFIG',
   },
   Actions: {
     ON: 'ON',

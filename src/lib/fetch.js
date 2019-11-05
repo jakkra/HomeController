@@ -99,7 +99,6 @@ export function getCurrentPlaying(callback) {
     .then(res => res.currentPlaying);
 }
 
-
 export function get3DPrinterState(callback) {
   const url = 'http://octopi.local/api/printer';
   const urlJob = 'http://octopi.local/api/job';
@@ -127,5 +126,13 @@ export function get3DPrinterState(callback) {
         job: jobStatus
       }
     });
+}
+
+export function enableJoinZigbee(time, callback) {
+  const url = mirrorUrl + '/api/permitJoin/' + time;
+
+  return fetch(url)
+    .then(checkStatus)
+    .then(res => res.json())
 }
 

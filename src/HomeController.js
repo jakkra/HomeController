@@ -12,6 +12,7 @@ import Tasks from './components/Tasks';
 import TemperatureGraph from './components/TemperatureGraph';
 import GardenGraph from './components/GardenGraph';
 import OctoPrint from './components/OctoPrint';
+import ConfigPage from './components/ConfigPage';
 import { Tabs } from './constants';
 import { rooms } from './config';
 
@@ -120,6 +121,9 @@ export default class HomeController extends Component {
       case Tabs.GARDEN:
         view = <GardenGraph />
         break;
+      case Tabs.CONFIG:
+        view = <ConfigPage />
+        break;
       default:
         break;
     }
@@ -141,7 +145,7 @@ export default class HomeController extends Component {
               <Col xs={2}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.GARDEN)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.PRINTER)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.UNKNOWN)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.CONFIG)}</Col>
             </Row>
           </Col>
         </div>
