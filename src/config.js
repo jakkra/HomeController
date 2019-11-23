@@ -49,12 +49,6 @@ export const rooms = [
             type: DeviceTypes.TASMOTA_OUTLET,
             ip: 'http://192.168.1.129',
           },
-          /*{
-            name:"Klocka",
-            id:12,
-            type:DeviceTypes.TASMOTA_OUTLET,
-            ip:"http://192.168.1.208"
-          },*/
           {
             name: 'Golvlampa',
             id: 13,
@@ -72,6 +66,32 @@ export const rooms = [
             id: 99,
             type: DeviceTypes.HYPERION,
             ip: 'http://192.168.1.30:8080',
+          },
+        ],
+      },
+      {
+        groupName: 'JUL',
+        devices: [
+          {
+            name: 'Stjärna vardsgasrum',
+            id: 17,
+            type: DeviceTypes.HUE,
+            hueName: 'star-livingroom',
+            color: '#d9534f'
+          },
+          {
+            name: 'Stjärna kök',
+            id: 18,
+            type: DeviceTypes.HUE,
+            hueName: 'star-kitchen',
+            color: '#d9534f'
+          },
+          {
+            name: 'Ljusstake',
+            id: 19,
+            type: DeviceTypes.WLED,
+            ip: 'http://192.168.1.251',
+            color: '#d9534f'
           },
         ],
       },
@@ -99,6 +119,25 @@ export const rooms = [
             id: 2,
             type: DeviceTypes.TOGGLE,
             ip: 'http://192.168.1.26/feed',
+          },
+        ],
+      },
+      {
+        groupName: 'JUL',
+        devices: [
+          {
+            name: 'Stjärna kök',
+            id: 18,
+            type: DeviceTypes.HUE,
+            hueName: 'star-kitchen',
+            color: '#d9534f'
+          },
+          {
+            name: 'Ljusstake',
+            id: 19,
+            type: DeviceTypes.WLED,
+            ip: 'http://192.168.1.251',
+            color: '#d9534f'
           },
         ],
       },
