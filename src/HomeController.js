@@ -6,6 +6,8 @@ import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf, faPrint, faTi
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
+import hollidayIcon from './img/animated-christmas.gif'
+
 import DevicePage from './components/DevicePage';
 import InformationPanel from './components/InformationPanel';
 import Tasks from './components/Tasks';
@@ -45,6 +47,13 @@ const styles = {
     fontSize: '1.5em',
     minWidth: 20,
   },
+  hollidayIcon: {
+    textAlign: 'right',
+    right: 0,
+    bottom: 50,
+    height: '40%',
+    position: 'absolute'
+  }
 };
 
 export default class HomeController extends Component {
@@ -132,10 +141,17 @@ export default class HomeController extends Component {
   }
 
   render() {
+    let hollidayImage = null;
+
+    if (this.state.selectedTab === Tabs.LIGHTS && !(isMobile && !isTablet)) {
+      hollidayImage = (<img src={hollidayIcon} alt="" style={ styles.hollidayIcon } />);
+    }
+
     return (
       <Col style={styles.container}>
         <ToastContainer autoClose={3000} position="bottom-center" closeOnClick />
         <div style={{ paddingBottom: 50 }}>{this.renderTabView()}</div>
+        {hollidayImage}
         <Row>{!((isMobile && !isTablet) || (this.state.selectedTab === Tabs.GARDEN)) ? <InformationPanel /> : null}</Row>
         <div style={styles.toolbar}>
           <Col styles={styles.toolbarColumn} md={12}>
