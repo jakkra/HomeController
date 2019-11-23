@@ -37,6 +37,7 @@ export default class DeviceSelector extends Component {
 
   renderDeviceButton(device) {
     let bsStyle = 'primary';
+    let overrideStyle = styles.deviceButton;
 
     switch (device.type) {
       case DeviceTypes.HUE:
@@ -56,10 +57,15 @@ export default class DeviceSelector extends Component {
         break;
     }
 
+    if (device.color) {
+      bsStyle = 'default';
+      overrideStyle = {...styles.deviceButton,  backgroundColor: device.color, color: 'white'};
+    }
+
     return (
       <Button
         key={device.id}
-        style={styles.deviceButton}
+        style={overrideStyle}
         href="#"
         bsStyle={bsStyle}
         onClick={() => this.onDeviceClicked(device)}>
