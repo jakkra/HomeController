@@ -13,6 +13,8 @@ export const gardenSources = [{ key: '5', name: 'Tomater' }, { key: '6', name: '
 
 export const octoiApiKey = '8D3D293D2413424582B79BDE1FD108A8';
 
+export const theme = 'christmas';
+
 export const rooms = [
   {
     name: 'Vardagsrum',

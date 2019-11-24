@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
 import hollidayIcon from './img/animated-christmas.gif'
+import hollidayIcon1 from './img/santa.gif'
 
 import DevicePage from './components/DevicePage';
 import InformationPanel from './components/InformationPanel';
@@ -50,8 +51,15 @@ const styles = {
   hollidayIcon: {
     textAlign: 'right',
     right: 0,
+    bottom: 70,
+    height: '38%',
+    position: 'absolute'
+  },
+  hollidayIcon1: {
+    textAlign: 'right',
+    right: '20%',
     bottom: 50,
-    height: '40%',
+    height: '25%',
     position: 'absolute'
   }
 };
@@ -141,10 +149,16 @@ export default class HomeController extends Component {
   }
 
   render() {
-    let hollidayImage = null;
+    let hollidayImage, hollidayImage1 = null;
+    let toolbarStyle = styles.toolbar;
 
-    if (this.state.selectedTab === Tabs.LIGHTS && !(isMobile && !isTablet)) {
+    if ((this.state.selectedTab === Tabs.LIGHTS) && !(isMobile && !isTablet)) {
       hollidayImage = (<img src={hollidayIcon} alt="" style={ styles.hollidayIcon } />);
+      hollidayImage1 = (<img src={hollidayIcon1} alt="" style={ styles.hollidayIcon1 } />);
+    }
+
+    if (this.props.theme === 'christmas') {
+      toolbarStyle = {...toolbarStyle, background: '#A01616'};
     }
 
     return (
@@ -152,8 +166,9 @@ export default class HomeController extends Component {
         <ToastContainer autoClose={3000} position="bottom-center" closeOnClick />
         <div style={{ paddingBottom: 50 }}>{this.renderTabView()}</div>
         {hollidayImage}
+        {hollidayImage1}
         <Row>{!((isMobile && !isTablet) || (this.state.selectedTab === Tabs.GARDEN)) ? <InformationPanel /> : null}</Row>
-        <div style={styles.toolbar}>
+        <div style={toolbarStyle}>
           <Col styles={styles.toolbarColumn} md={12}>
             <Row xs={12}>
               <Col xs={2}>{this.renderButton(Tabs.LIGHTS)}</Col>
