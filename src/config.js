@@ -122,6 +122,12 @@ export const rooms = [
             type: DeviceTypes.TOGGLE,
             ip: 'http://192.168.1.26/feed',
           },
+          {
+            name: 'Kaffekokare',
+            id: 11,
+            type: DeviceTypes.RF_OUTLET,
+            url: 'http://192.168.1.98:3001/api/serial/outlet:4:',
+          },
         ],
       },
       {
@@ -144,13 +150,6 @@ export const rooms = [
         ],
       },
     ],
-    other: {
-      name: 'Kaffekokare',
-      id: 11,
-      type: DeviceTypes.RF_OUTLET,
-      urlOn: 'http://192.168.1.98:3001/api/serial/outlet:4:1',
-      urlOff: 'http://192.168.1.98:3001/api/serial/outlet:4:0',
-    },
   },
   {
     name: 'Sovrum',

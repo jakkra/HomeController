@@ -22,7 +22,7 @@ export function handleDeviceAction(device, action, options) {
     case DeviceTypes.TASMOTA_OUTLET:
       return handleSonoffTasmotaOutletAction(device.ip, action);
     case DeviceTypes.RF_OUTLET:
-      return handleRfOutlet(device.ip, action);
+      return handleRfOutlet(device.url, action);
     case DeviceTypes.HYPERION:
       return handleHyperion(device.ip, action);
     case DeviceTypes.TOGGLE:
