@@ -223,7 +223,7 @@ export const rooms = [
             name: 'Spot Skrivbord',
             id: 13,
             type: DeviceTypes.HUE,
-            hueName: 'Lekrum-spot-right',
+            hueName: 'Lekrum-spot-desk',
           },
           {
             name: 'Spot Mitten',
@@ -258,6 +258,12 @@ export const rooms = [
             id: 70,
             type: DeviceTypes.HUE,
             hueName: 'Allrum-spot-mirror',
+          },
+          {
+            name: 'Hörnlampa',
+            id: 72,
+            type: DeviceTypes.HUE,
+            hueName: 'corner',
           },
         ],
       },
