@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import HomeController from './HomeController';
-import Snowfall  from './components/Snowfall'
+import Snowfall  from './components/Snowfall';
+
 import { theme } from './config';
 import 'moment/locale/sv';
 

@@ -152,7 +152,7 @@ export default class HomeController extends Component {
     let hollidayImage, hollidayImage1 = null;
     let toolbarStyle = styles.toolbar;
 
-    if ((this.state.selectedTab === Tabs.LIGHTS) && !(isMobile && !isTablet)) {
+    if ((this.state.selectedTab === Tabs.LIGHTS) && !(isMobile && !isTablet) && this.props.theme === 'christmas') {
       hollidayImage = (<img src={hollidayIcon} alt="" style={ styles.hollidayIcon } />);
       hollidayImage1 = (<img src={hollidayIcon1} alt="" style={ styles.hollidayIcon1 } />);
     }
