@@ -17,6 +17,7 @@ const constants = {
   },
   DeviceTypes: {
     WLED: 'WLED',
+    WLED_CUSTOM: 'WLED_CUSTOM',
     HUE: 'HUE',
     TASMOTA_OUTLET: 'TASMOTA_OUTLET',
     RF_OUTLET: 'RF_OUTLET',

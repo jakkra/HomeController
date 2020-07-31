@@ -17,6 +17,8 @@ export function handleDeviceAction(device, action, options) {
   switch (device.type) {
     case DeviceTypes.WLED:
       return handleWled(device, action, options);
+    case DeviceTypes.WLED_CUSTOM:
+      return handleWledCustom(device, action, options);
     case DeviceTypes.HUE:
       return handleHue(device, action, options);
     case DeviceTypes.TASMOTA_OUTLET:
@@ -58,7 +60,7 @@ export function handleHyperion(url, action) {
         url += '/hyperion/off';
         break;
       default:
-        return reject(new Error(`Action ${action} not implemented/supported for wled`));
+        return reject(new Error(`Action ${action} not implemented/supported for hyperion`));
     }
     console.log(url);
     return fetch(url, { mode: 'no-cors' }).then(checkStatus);
@@ -75,7 +77,7 @@ export function handleRfOutlet(url, action) {
         url += '0';
         break;
       default:
-        return reject(new Error(`Action ${action} not implemented/supported for wled`));
+        return reject(new Error(`Action ${action} not implemented/supported for rf outlet`));
     }
     console.log(url);
     return fetch(url, { mode: 'no-cors' }).then(checkStatus);
@@ -170,6 +172,38 @@ function handleWled(light, action, params) {
         break;
       case Actions.LIGHT_EFFECT:
         url += '/win&FX=' + params.effect;
+        break;
+      default:
+        return reject(new Error(`Action ${action} not implemented/supported for wled`));
+    }
+    console.log(url);
+    return fetch(url, { mode: 'no-cors' }).then(checkStatus);
+  });
+}
+
+function handleWledCustom(light, action, params) {
+  return new Promise((resolve, reject) => {
+    let url = light.ip;
+
+    switch (action) {
+      case Actions.ON:
+        url += '/win?T=1';
+        break;
+      case Actions.OFF:
+        url += '/win?T=0';
+        break;
+      case Actions.TOGGLE:
+        url += '/win?T=2';
+        break;
+      case Actions.BRIGHTNESS:
+        if (params && params.brightness) {
+          url += '/win?A=' + params.brightness;
+        } else {
+          return reject(new Error(`Action ${action} requires params with brightness set for wled-light`));
+        }
+        break;
+      case Actions.LIGHT_EFFECT:
+        url += '/win?FX=' + params.effect;
         break;
       default:
         return reject(new Error(`Action ${action} not implemented/supported for wled`));

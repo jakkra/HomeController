@@ -200,7 +200,7 @@ export const rooms = [
             name: 'Falcon',
             id: 1,
             type: DeviceTypes.WLED,
-            ip: 'http://192.168.1.33',
+            ip: 'http://192.168.1.34',
           },
           {
             name: 'Skrivare',
@@ -213,6 +213,12 @@ export const rooms = [
             id: 4,
             type: DeviceTypes.WLED,
             ip: 'http://192.168.1.62',
+          },
+          {
+            name: 'Vägg',
+            id: 73,
+            type: DeviceTypes.WLED_CUSTOM,
+            ip: 'http://192.168.1.15',
           },
         ],
       },
