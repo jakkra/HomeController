@@ -136,3 +136,10 @@ export function enableJoinZigbee(time, callback) {
     .then(res => res.json())
 }
 
+export function renderTimelapse(length, callback) {
+  const url = mirrorUrl + '/api/timelapseRender?length=' + length;
+
+  return fetch(url)
+    .then(checkStatus)
+    .then(res => res.json())
+}

@@ -16,6 +16,7 @@ import TemperatureGraph from './components/TemperatureGraph';
 import GardenGraph from './components/GardenGraph';
 import OctoPrint from './components/OctoPrint';
 import ConfigPage from './components/ConfigPage';
+import TimelapsePage from './components/TimelapsePage';
 import { Tabs } from './constants';
 import { rooms } from './config';
 
@@ -99,6 +100,9 @@ export default class HomeController extends Component {
       case Tabs.GARDEN:
         image = faTint;
         break;
+      case Tabs.TIMELAPSE:
+        image = faTint;
+        break;
       default:
         image = faBars;
         break;
@@ -141,6 +145,9 @@ export default class HomeController extends Component {
       case Tabs.CONFIG:
         view = <ConfigPage />
         break;
+      case Tabs.TIMELAPSE:
+        view = <TimelapsePage />
+        break;
       default:
         break;
     }
@@ -176,6 +183,7 @@ export default class HomeController extends Component {
               <Col xs={2}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.GARDEN)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.PRINTER)}</Col>
+              <Col xs={2}>{this.renderButton(Tabs.TIMELAPSE)}</Col>
               <Col xs={2}>{this.renderButton(Tabs.CONFIG)}</Col>
             </Row>
           </Col>

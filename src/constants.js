@@ -7,6 +7,7 @@ const constants = {
     PRINTER: 'printer',
     GARDEN: 'garden',
     CONFIG: 'CONFIG',
+    TIMELAPSE: 'TIMELAPSE'
   },
   Actions: {
     ON: 'ON',
