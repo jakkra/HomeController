@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Col, Row, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf, faPrint, faTint } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb, faBars, faShoppingBasket, faThermometerHalf, faPrint, faTint, faSeedling } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer } from 'react-toastify';
 import { isMobile, isTablet } from 'react-device-detect';
 
@@ -61,7 +61,7 @@ const styles = {
     right: '20%',
     bottom: 50,
     height: '25%',
-    position: 'absolute'
+    position: 'absolute',
   }
 };
 
@@ -101,7 +101,7 @@ export default class HomeController extends Component {
         image = faTint;
         break;
       case Tabs.TIMELAPSE:
-        image = faTint;
+        image = faSeedling;
         break;
       default:
         image = faBars;
@@ -176,15 +176,15 @@ export default class HomeController extends Component {
         {hollidayImage1}
         <Row>{!((isMobile && !isTablet) || (this.state.selectedTab === Tabs.GARDEN)) ? <InformationPanel /> : null}</Row>
         <div style={toolbarStyle}>
-          <Col styles={styles.toolbarColumn} md={12}>
-            <Row xs={12}>
-              <Col xs={2}>{this.renderButton(Tabs.LIGHTS)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.TASKS)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.TEMPERATURE)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.GARDEN)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.PRINTER)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.TIMELAPSE)}</Col>
-              <Col xs={2}>{this.renderButton(Tabs.CONFIG)}</Col>
+          <Col styles={styles.toolbarColumn} >
+            <Row style={{ display: "flex", justifyContent: "space-between" }} >
+              {this.renderButton(Tabs.LIGHTS)}
+              {this.renderButton(Tabs.TASKS)}
+              {this.renderButton(Tabs.TEMPERATURE)}
+              {this.renderButton(Tabs.GARDEN)}
+              {this.renderButton(Tabs.PRINTER)}
+              {this.renderButton(Tabs.TIMELAPSE)}
+              {this.renderButton(Tabs.CONFIG)}
             </Row>
           </Col>
         </div>

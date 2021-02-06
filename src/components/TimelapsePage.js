@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Form, FormControl, Button } from 'react-bootstrap';
-import { faSeedling } from '@fortawesome/free-solid-svg-icons';
+import { Form, FormControl, Button, Row, Col } from 'react-bootstrap';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 import { renderTimelapse } from '../lib/fetch';
 
 const styles = {
@@ -29,12 +30,11 @@ const styles = {
     fontSize: '0.9em',
   },
   taskInput : {
-    width: '20%',
     textAlign: 'center',
   },
   videoFeed: {
-    maxWidth: '50%',
-    maxHeight: '50%',
+    maxWidth: '100%',
+    maxHeight: '100%',
     marginTop: 10,
     marginRight: 0
   },
@@ -44,11 +44,12 @@ export default class TimelapsePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      timelapseLength: 3,
+      timelapseLength: 25,
       showVideo: false
     };
     this.setTimelapseLength = this.setTimelapseLength.bind(this);
     this.onLengthSelected = this.onLengthSelected.bind(this);
+    this.onPlayTimelapse = this.onPlayTimelapse.bind(this);
   }
 
   setTimelapseLength(input) {
@@ -58,10 +59,13 @@ export default class TimelapsePage extends React.Component {
   }
 
   onLengthSelected() {
-    this.setState({showVideo: false})
     renderTimelapse(this.state.timelapseLength)
-    .then((done) => this.setState({showVideo: true}))
+    .then(() => toast.success('Rendering timelapse, will take a few minutes...'))
     .catch(err => console.log(err));
+  }
+
+  onPlayTimelapse() {
+    this.setState({showVideo: true})
   }
 
   renderVideoRenderButtonAndInput() {
@@ -74,7 +78,10 @@ export default class TimelapsePage extends React.Component {
             value={this.state.timelapseLength}
           />
           <Button block  bsStyle="primary" onClick={this.onLengthSelected}>
-            <FontAwesomeIcon icon={faSeedling} />
+            Render new timelapse
+          </Button>
+          <Button block  bsStyle="primary" onClick={this.onPlayTimelapse}>
+            <FontAwesomeIcon icon={faPlay} />
           </Button>
         </Form>
       </div>
@@ -90,10 +97,14 @@ export default class TimelapsePage extends React.Component {
 
   render() {
     return (
-      <div style={styles.container}>
-        {this.renderVideoRenderButtonAndInput()}
-        {this.state.showVideo ? this.renderVideoPlayer() : null}
-      </div>
+      <Row md={12} style={styles.container}>
+        <Col md={2}>
+          {this.renderVideoRenderButtonAndInput()}
+        </Col>
+        <Col md={10}>
+          {this.state.showVideo ? this.renderVideoPlayer() : null}
+        </Col>
+      </Row>
     );
   }
 }
