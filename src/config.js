@@ -103,13 +103,19 @@ export const rooms = [
     name: 'Kök',
     groups: [
       {
-        groupName: 'WLED',
+        groupName: 'Ljus',
         devices: [
           {
             name: 'Slinga',
             id: 2,
             type: DeviceTypes.WLED,
             ip: 'http://192.168.1.158',
+          },
+          {
+            name: 'Fönsterbräda',
+            id: 7,
+            type: DeviceTypes.TASMOTA_OUTLET,
+            ip: 'http://192.168.1.184',
           },
         ],
       },
